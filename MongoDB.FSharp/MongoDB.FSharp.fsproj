@@ -1,33 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>7cbeb93a-1590-42db-9e40-61630e79304a</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MongoDB.FSharp</RootNamespace>
-    <AssemblyName>MongoDB.FSharp</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
-    <Name>MongoDB.FSharp</Name>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MongoDB.FSharp.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>portable</DebugType>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MongoDB.FSharp.XML</DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Serializers.fs" />
-    <None Include="paket.references" />
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+  </ItemGroup>
 </Project>
