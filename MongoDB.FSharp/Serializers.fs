@@ -49,15 +49,15 @@ module Serializers =
     type ListSerializer<'T>() =
         inherit SerializerBase<List<'T>>()
 
-        let contentSerializer = BsonSerializer.LookupSerializer(typeof<System.Collections.Generic.IEnumerable<'T>>)
+        let contentSerializer = BsonSerializer.LookupSerializer(typeof<'T[]>)
 
         override _.Serialize(context, _, value) =
-            let list = value :> System.Collections.Generic.IEnumerable<'T>
+            let list = value |> List.toArray
             contentSerializer.Serialize(context, list)
 
         override _.Deserialize(context, args) =
-            let list = contentSerializer.Deserialize(context, args) :?> System.Collections.Generic.IEnumerable<'T>
-            list |> List.ofSeq
+            let list = contentSerializer.Deserialize(context, args) :?>'T[]
+            list |> List.ofArray
 
 
     let fsharpType (typ : Type) =
@@ -127,11 +127,11 @@ module Serializers =
         inherit SerializerBase<'T>()
 
         let readItems context args (types : Type seq) =
-            types |> Seq.fold(fun state t ->
+            types
+            |> Seq.fold(fun state t ->
                 let serializer = BsonSerializer.LookupSerializer(t)
                 let item = serializer.Deserialize(context, args)
-                item :: state
-            ) []
+                item :: state) []
             |> Seq.toArray |> Array.rev
 
         override _.Serialize(context, args, value) =
@@ -140,20 +140,22 @@ module Serializers =
             let info, values = FSharpValue.GetUnionFields(value, args.NominalType)
             writer.WriteName(info.Name)
             writer.WriteStartArray()
-            values |> Seq.zip(info.GetFields()) |> Seq.iter (fun (field, value) ->
+            values 
+            |> Seq.zip(info.GetFields()) 
+            |> Seq.iter (fun (field, value) ->
                 let itemSerializer = BsonSerializer.LookupSerializer(field.PropertyType)
-                itemSerializer.Serialize(context, args, value)
-            )
+                itemSerializer.Serialize(context, args, value))
             writer.WriteEndArray()
             writer.WriteEndDocument()
-                
+
         override _.Deserialize(context, args) =
             let reader = context.Reader
             reader.ReadStartDocument()
             let typeName = reader.ReadName()
             let unionType = 
                 FSharpType.GetUnionCases(args.NominalType) 
-                |> Seq.where (fun case -> case.Name = typeName) |> Seq.head
+                |> Seq.where (fun case -> case.Name = typeName)
+                |> Seq.head
             reader.ReadStartArray()
             let items = readItems context args (unionType.GetFields() |> Seq.map(fun f -> f.PropertyType))
             reader.ReadEndArray()
@@ -181,30 +183,28 @@ module Serializers =
 
     type FsharpSerializationProvider(useOptionNull) =
         let serializers =
-            [
-                if useOptionNull then yield SourceConstructFlags.SumType, optionSerializer
-                yield SourceConstructFlags.ObjectType, mapSerializer
-                yield SourceConstructFlags.SumType, listSerializer
-                yield SourceConstructFlags.SumType, unionCaseSerializer
-            ]
+            [ if useOptionNull then SourceConstructFlags.SumType, optionSerializer
+              SourceConstructFlags.ObjectType, mapSerializer
+              SourceConstructFlags.SumType, listSerializer
+              SourceConstructFlags.SumType, unionCaseSerializer ]
 
         interface IBsonSerializationProvider with
             member _.GetSerializer(typ : Type) =
-                let serializer =
-                    match fsharpType typ with
-                    | Some flag ->
-                        serializers |> List.filter (fst >> (=) flag)
-                                    |> List.map snd
-                                    |> List.fold (fun result s -> result |> Option.orElseWith (fun _ -> s typ)) None
-                    | _ -> None
-                serializer |> Option.toObj
+                match fsharpType typ with
+                | Some flag ->
+                    serializers
+                    |> List.filter (fst >> (=) flag)
+                    |> List.map snd
+                    |> List.fold (fun result s -> result |> Option.orElseWith (fun _ -> s typ)) None
+                | _ -> None
+                |> Option.toObj
 
     let mutable isRegistered = false
 
     type RegistrationOption = { UseOptionNull: bool }
     let defaultRegistrationOption = { UseOptionNull = true }
 
-    /// Registers all F# serializers
+    // Registers all F# serializers
     let RegisterWithOptions(opt) =
         if not isRegistered then
             BsonSerializer.RegisterSerializationProvider(FsharpSerializationProvider(opt.UseOptionNull))
@@ -214,3 +214,4 @@ module Serializers =
 type Serializers() =
     static member Register(?opts: Serializers.RegistrationOption) =
         Serializers.RegisterWithOptions(opts |> Option.defaultValue Serializers.defaultRegistrationOption)
+
