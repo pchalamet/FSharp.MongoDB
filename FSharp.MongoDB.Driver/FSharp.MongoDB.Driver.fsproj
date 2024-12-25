@@ -12,7 +12,7 @@
     <Compile Include="Serializers/ValueOption.fs" />
     <Compile Include="Serializers/List.fs" />
     <Compile Include="Serializers/Map.fs" />
-    <Compile Include="Serializers/DiscriminatedUnion.fs" />
+    <Compile Include="Serializers/UnionCase.fs" />
     <Compile Include="Provider.fs" />
   </ItemGroup>
 
