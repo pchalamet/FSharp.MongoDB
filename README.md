@@ -8,6 +8,7 @@ Following types are supported:
 * Map
 * Set
 * Option
+* ValueOption
 * Discriminated Unions
 
 Records are supported as well out of the box with official MongoDB driver. Probably you want to add `CLIMutable` attribute on the record to support automatic ObjectId initialization.
@@ -23,11 +24,8 @@ Install this project via NuGet.
 
 On startup you have to register `FSharp.MongoDB.Driver`:
 ```ocaml
-open FSharp.MongoDB.Driver
-Serializers.Register()
+FSharp.MongoDB.Driver.Register()
 ```
-
-The `Serializers.Register()` call just registers serializers with the MongoDB driver.
 
 # Usage
 Use FSharp.MongoDB.Driver like you normally would in C#. 

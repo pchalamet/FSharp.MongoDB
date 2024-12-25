@@ -1,11 +1,10 @@
-﻿module ``Acceptance Tests``
+﻿module FSharp.MongoDB.Driver.Tests
 
 open System
 open FsUnit
 open NUnit.Framework
 open MongoDB.Bson
 open MongoDB.Driver
-open FSharp.MongoDB.Driver
 open System.Linq
 open TestUtils
 open MongoDB.Bson.Serialization.Attributes
@@ -45,6 +44,7 @@ type RecordWithCollections =
       IntVal: int
       DoubleVal: double
       ListVal: int list
+      IntValOpt: int ValueOption
       SetVal: Set<string> option
       MapVal: Map<string, int> option
       OptionVal: int option }
@@ -74,7 +74,7 @@ let init() =
     client <- new MongoClient(connectionString)
     client.DropDatabase(dbname)
     db <- client.GetDatabase(dbname)
-    Serializers.Register()
+    Register()
 
 [<OneTimeTearDown>]
 let teardown() =
@@ -256,6 +256,7 @@ let ``It can serialize record with list`` () =
           IntVal = 123
           DoubleVal = 1.23
           ListVal = [1; 2; 3]
+          IntValOpt = ValueSome 42
           SetVal = ["toto"; "titi"; "tata"] |> Set |> Some
           MapVal = ["toto", 42; "titi", 666] |> Map |> Some
           OptionVal = Some 123 }
