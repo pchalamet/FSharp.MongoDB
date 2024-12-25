@@ -45,3 +45,16 @@ collection.Insert { Id = id; Name = "George"; Scores = [13; 52; 6] }
 
 let george = collection.Find(fun person -> person.Id = id)
 ```
+
+# Mapping
+
+## Option and ValueOption
+`null` if `None` or `ValueNone`.\
+Otherwise the value.
+
+## Map
+key/value mapping.
+
+# Union Case
+key is the case name.\
+value is an array of the values of the case
