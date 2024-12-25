@@ -68,7 +68,7 @@ module Serializers =
 
     let createClassMapSerializer (type': Type) (classMap: BsonClassMap) =
         let concreteType = type'.MakeGenericType(classMap.ClassType)
-        let ctor = concreteType.GetConstructor([| typeof<BsonClassMap> |])
+        let ctor = concreteType.GetConstructor([| typeof<BsonClassMap> |]) |> nonNull
         ctor.Invoke([| classMap |]) :?> IBsonSerializer
 
 
@@ -181,28 +181,23 @@ module Serializers =
 
     type FsharpSerializationProvider(useOptionNull) =
         let serializers =
-          seq {
-              if useOptionNull then yield SourceConstructFlags.SumType, optionSerializer
-              yield SourceConstructFlags.ObjectType, mapSerializer
-              yield SourceConstructFlags.SumType, listSerializer
-              yield SourceConstructFlags.SumType, unionCaseSerializer
-          } |> List.ofSeq
+            [
+                if useOptionNull then yield SourceConstructFlags.SumType, optionSerializer
+                yield SourceConstructFlags.ObjectType, mapSerializer
+                yield SourceConstructFlags.SumType, listSerializer
+                yield SourceConstructFlags.SumType, unionCaseSerializer
+            ]
 
         interface IBsonSerializationProvider with
             member _.GetSerializer(typ : Type) =
-                let tp = fsharpType typ
-                printfn $"FSHARPTYPE {typ.FullName} ==> {tp}"
-
                 let serializer =
                     match fsharpType typ with
                     | Some flag ->
-                        serializers |> Seq.filter (fst >> (=) flag)
-                                    |> Seq.map snd
-                                    |> Seq.fold (fun result s -> result |> Option.orElseWith (fun _ -> s typ)) None
+                        serializers |> List.filter (fst >> (=) flag)
+                                    |> List.map snd
+                                    |> List.fold (fun result s -> result |> Option.orElseWith (fun _ -> s typ)) None
                     | _ -> None
-                match serializer with
-                | Some serializer -> serializer
-                | _ -> null
+                serializer |> Option.toObj
 
     let mutable isRegistered = false
 
