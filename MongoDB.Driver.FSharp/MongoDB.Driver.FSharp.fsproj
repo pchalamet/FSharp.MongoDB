@@ -3,6 +3,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,4 +13,23 @@
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+
+  <PropertyGroup>
+    <!-- https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec -->
+    <PackageId>MongoDB.Driver.FSharp</PackageId>
+    <Authors>Tim Kellogg; Pierre Chalamet</Authors>
+    <Title>MongoDB.Driver.FSharp</Title>
+    <Description>Add F# support to MongoDB.Driver</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/pchalamet/MongoDB.Driver.FSharp</PackageProjectUrl>
+    <RepositoryUrl>git@github.com:pchalamet/MongoDB.Driver.FSharp.git</RepositoryUrl>
+    <PackageTags>f#;fsharp;mongodB;driver</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
 </Project>
