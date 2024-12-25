@@ -61,6 +61,6 @@ Otherwise the value.
 ## Map
 key/value mapping.
 
-# Union Case
+# Discriminated Unions
 key is the case name.\
 value is an array of the values of the case
