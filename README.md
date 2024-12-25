@@ -1,3 +1,5 @@
+[![Build status](https://github.com/pchalamet/FSharp.MongoDB.Driver/workflows/build/badge.svg)](https://github.com/pchalamet/FSharp.MongoDB.Driver/actions?query=workflow%3Abuild) 
+
 # FSharp.MongoDB.Driver
 This project adds support for F# types to the [official .NET MongoDB driver][1].
 
@@ -21,6 +23,10 @@ type RecordTypeOptId =
 
 # Installation
 Install this project via NuGet.
+
+Package | Status | Description
+--------|--------|------------
+FSharp.MongoDB.Driver | [![Nuget](https://img.shields.io/nuget/v/FSharp.MongoDB.Driver)](https://nuget.org/packages/FSharp.MongoDB.Driver) | Add F# support to MongoDB.Driver
 
 On startup you have to register `FSharp.MongoDB.Driver`:
 ```ocaml
