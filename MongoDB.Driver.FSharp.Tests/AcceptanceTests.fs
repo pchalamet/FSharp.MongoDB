@@ -5,30 +5,34 @@ open FsUnit
 open NUnit.Framework
 open MongoDB.Bson
 open MongoDB.Driver
-open MongoDB.FSharp
+open MongoDB.Driver.FSharp
 open System.Linq
 open TestUtils
+open MongoDB.Bson.Serialization.Attributes
 
 type ObjectWithList() =
     member val Id : BsonObjectId = newBsonObjectId() with get, set
     member val List : string list = [] with get, set
 
-type RecordType = {
-    Id : BsonObjectId
-    Name : string
-}
+type RecordType =
+    { Id : BsonObjectId
+      Name : string }
 
-type Child = {
-    ChildName: string
-    Age: int
-}
+[<RequireQualifiedAccessAttribute>]
+[<CLIMutable>]
+type RecordTypeOptId =
+    { [<BsonIgnoreIfDefault>] Id : ObjectId
+      Name : string }
 
-type Person = {
-    Id: BsonObjectId
-    PersonName: string
-    Age: int
-    Childs: Child seq
-}
+type Child =
+    { ChildName: string
+      Age: int }
+
+type Person =
+    { Id: BsonObjectId
+      PersonName: string
+      Age: int
+      Childs: Child seq }
 
 type DimmerSwitch =
     | Off
@@ -110,6 +114,17 @@ let ``It can serialize records``() =
     let fromDb = genCollection |> findById obj.Id
     let name = fromDb["Name"].AsString
     name |> should equal "test"
+
+[<Test>]
+let ``It can serialize records and generate Id``() =
+    let collection = db.GetCollection<RecordTypeOptId> "RecordTypeOptId"
+    let obj = { RecordTypeOptId.Id = Unchecked.defaultof<ObjectId> ; RecordTypeOptId.Name = "test"  }
+    collection.InsertOne obj
+
+    let genCollection = db.GetCollection<RecordTypeOptId> "RecordTypeOptId"
+    let fromDb = genCollection.Find(fun x -> x.Name = "test").First()
+    fromDb.Id |> should equal obj.Id
+    fromDb.Id |> should not' (equal Unchecked.defaultof<ObjectId>)
 
 [<Test>]
 let ``It can deserialize records``() =

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>MongoDB.FSharp</id>
+    <id>MongoDB.Driver.FSharp</id>
     <version>0.1.0</version>
-    <title>MongoDB.FSharp</title>
+    <title>MongoDB.Driver.FSharp</title>
     <authors>Tim Kellogg</authors>
     <owners>Tim Kellogg</owners>
     <licenseUrl>https://github.com/tkellogg/MongoDB.FSharp/blob/master/License.txt</licenseUrl>

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MongoDB.FSharp\MongoDB.FSharp.fsproj" />
+    <ProjectReference Include="..\MongoDB.Driver.FSharp\MongoDB.Driver.FSharp.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

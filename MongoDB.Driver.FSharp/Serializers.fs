@@ -1,4 +1,4 @@
-﻿namespace MongoDB.FSharp
+﻿namespace MongoDB.Driver.FSharp
 
 open System
 open Microsoft.FSharp.Reflection
@@ -8,7 +8,6 @@ open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Serializers
 
 module Serializers =
-
 
     type OptionSerializer<'T>() =
         inherit SerializerBase<Option<'T>>()
@@ -65,62 +64,6 @@ module Serializers =
         |> Seq.cast<CompilationMappingAttribute>
         |> Seq.map(fun t -> t.SourceConstructFlags)
         |> Seq.tryHead
-
-    let createClassMapSerializer (type': Type) (classMap: BsonClassMap) =
-        let concreteType = type'.MakeGenericType(classMap.ClassType)
-        let ctor = concreteType.GetConstructor([| typeof<BsonClassMap> |]) |> nonNull
-        ctor.Invoke([| classMap |]) :?> IBsonSerializer
-
-
-    type RecordSerializerBase(classMap : BsonClassMap) =
-        let classMapSerializer = classMap |> createClassMapSerializer typedefof<BsonClassMapSerializer<_>>
-
-        let getter = 
-            match classMap.IdMemberMap with
-            | null -> None
-            | mm -> Some(mm.Getter)
-
-        let idProvider = classMapSerializer :?> IBsonIdProvider
-
-        member val _ClassMapSerializer = classMapSerializer
-        
-        interface IBsonSerializer with
-            member _.ValueType = classMap.ClassType
-            
-            member _.Serialize(context, args, value) = classMapSerializer.Serialize(context, args, value)
-            member _.Deserialize(context, args) = classMapSerializer.Deserialize(context, args)
-
-
-        interface IBsonDocumentSerializer  with
-            member _.TryGetMemberSerializationInfo(memberName, serializationInfo) = 
-                let m = classMap.AllMemberMaps |> Seq.tryFind (fun x -> x.MemberName = memberName)
-                match m with
-                | Some(x) ->
-                    serializationInfo <- BsonSerializationInfo(x.ElementName, x.GetSerializer(), x.MemberType)
-                    true        
-                | None -> 
-                    raise <| ArgumentOutOfRangeException($"Class has no member called %s{memberName}")
-
-        interface IBsonIdProvider with
-            member _.GetDocumentId(document : Object, id : Object byref, nominalType : Type byref, idGenerator : IIdGenerator byref) =
-                match getter with
-                | Some(i) -> 
-                    id <- i.DynamicInvoke(([document] |> Array.ofList))
-                    idProvider.GetDocumentId(document, ref id, ref nominalType, ref idGenerator)
-                | None -> false
-
-            member _.SetDocumentId(document : Object, id : Object) = idProvider.SetDocumentId(document, id)
-
-
-    type RecordSerializer<'T>(classMap : BsonClassMap) =
-        inherit RecordSerializerBase(classMap)
-        
-        member private my.Serializer = my._ClassMapSerializer :?> IBsonSerializer<'T>
-
-        interface IBsonSerializer<'T> with
-            member my.Serialize(context: BsonSerializationContext, args: BsonSerializationArgs, value: 'T) =
-                my.Serializer.Serialize(context, args, value)
-            member my.Deserialize(context, args) = my.Serializer.Deserialize(context, args)
 
 
     type UnionCaseSerializer<'T>() =
