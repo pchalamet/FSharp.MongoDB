@@ -1,23 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>de725dac-c637-4da7-a30d-69061d33d1b2</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>MongoDB.FSharp.Tests</RootNamespace>
-    <AssemblyName>MongoDB.FSharp.Tests</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
-    <Name>MongoDB.FSharp.Tests</Name>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="TestUtils.fs" />
-    <Compile Include="TestTypes.fs" />
     <Compile Include="AcceptanceTests.fs" />
-    <Content Include="app.config" />
-    <Content Include="paket.references" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MongoDB.FSharp\MongoDB.FSharp.fsproj" />
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="FsUnit" Version="6.0.1" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+
+    <PackageReference Include="Mongo2Go" Version="4.0.0" />
+  </ItemGroup>
+
 </Project>
