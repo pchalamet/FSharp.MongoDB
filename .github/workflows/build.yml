@@ -17,6 +17,11 @@ jobs:
         with:
           dotnet-version: 9.0.100
 
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.11.0
+        with:
+          mongodb-version: '8.0'
+  
       - name: Build & Test
         run: make test config=Release
 
