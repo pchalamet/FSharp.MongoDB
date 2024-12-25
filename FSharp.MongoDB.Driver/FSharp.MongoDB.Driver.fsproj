@@ -21,13 +21,13 @@
 
   <PropertyGroup>
     <!-- https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec -->
-    <PackageId>MongoDB.Driver.FSharp</PackageId>
+    <PackageId>FSharp.MongoDB.Driver</PackageId>
     <Authors>Tim Kellogg; Pierre Chalamet</Authors>
-    <Title>MongoDB.Driver.FSharp</Title>
+    <Title>FSharp.MongoDB.Driver</Title>
     <Description>Add F# support to MongoDB.Driver</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/pchalamet/MongoDB.Driver.FSharp</PackageProjectUrl>
-    <RepositoryUrl>git@github.com:pchalamet/MongoDB.Driver.FSharp.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pchalamet/FSharp.MongoDB.Driver</PackageProjectUrl>
+    <RepositoryUrl>git@github.com:pchalamet/FSharp.MongoDB.Driver.git</RepositoryUrl>
     <PackageTags>f#;fsharp;mongodB;driver</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

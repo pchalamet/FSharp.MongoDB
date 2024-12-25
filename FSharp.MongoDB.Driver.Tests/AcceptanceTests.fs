@@ -5,7 +5,7 @@ open FsUnit
 open NUnit.Framework
 open MongoDB.Bson
 open MongoDB.Driver
-open MongoDB.Driver.FSharp
+open FSharp.MongoDB.Driver
 open System.Linq
 open TestUtils
 open MongoDB.Bson.Serialization.Attributes
@@ -70,9 +70,10 @@ let mutable db: IMongoDatabase = Unchecked.defaultof<IMongoDatabase>
 [<OneTimeSetUp>]
 let init() =
     let connectionString = "mongodb://localhost"
+    let dbname = "FSharp-MongoDB-Driver"
     client <- new MongoClient(connectionString)
-    client.DropDatabase("MongoDB-FSharp")
-    db <- client.GetDatabase("MongoDB-FSharp")
+    client.DropDatabase(dbname)
+    db <- client.GetDatabase(dbname)
     Serializers.Register()
 
 [<OneTimeTearDown>]

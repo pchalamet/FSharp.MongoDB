@@ -1,4 +1,4 @@
-# MongoDB.Driver.FSharp
+# FSharp.MongoDB.Driver
 This project takes the [official .NET MongoDB driver][1] and serializers for F# immutable type.
 
 It's a fork of [MongoDB.FSharp](https://github.com/tkellogg/MongoDB.FSharp) and has been extensively reworked to make it support .net 9 and nullable.
@@ -21,16 +21,16 @@ type RecordTypeOptId =
 # Installation
 Install this project via NuGet.
 
-On startup you have to register `MongoDB.Driver.FSharp`:
+On startup you have to register `FSharp.MongoDB.Driver`:
 ```ocaml
-open MongoDB.Driver.FSharp
+open FSharp.MongoDB.Driver
 Serializers.Register()
 ```
 
 The `Serializers.Register()` call just registers serializers with the MongoDB driver.
 
 # Usage
-Use MongoDB.Driver.FSharp like you normally would in C#. 
+Use FSharp.MongoDB.Driver like you normally would in C#. 
 
 ```ocaml
 type Person = { Id : BsonObjectId; Name : string; Scores : int list }

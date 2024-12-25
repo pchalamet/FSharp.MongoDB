@@ -6,13 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C400BE02-457C-4C0D-BEE1-874EC44EAA22}"
 	ProjectSection(SolutionItems) = preProject
 		License.txt = License.txt
-		MongoDB.Driver.FSharp.nuspec = MongoDB.Driver.FSharp.nuspec
+		FSharp.MongoDB.Driver.nuspec = FSharp.MongoDB.Driver.nuspec
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MongoDB.Driver.FSharp", "MongoDB.Driver.FSharp\MongoDB.Driver.FSharp.fsproj", "{7CBEB93A-1590-42DB-9E40-61630E79304A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.MongoDB.Driver", "FSharp.MongoDB.Driver\FSharp.MongoDB.Driver.fsproj", "{7CBEB93A-1590-42DB-9E40-61630E79304A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MongoDB.Driver.FSharp.Tests", "MongoDB.Driver.FSharp.Tests\MongoDB.Driver.FSharp.Tests.fsproj", "{DE725DAC-C637-4DA7-A30D-69061D33D1B2}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.MongoDB.Driver.Tests", "FSharp.MongoDB.Driver.Tests\FSharp.MongoDB.Driver.Tests.fsproj", "{DE725DAC-C637-4DA7-A30D-69061D33D1B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

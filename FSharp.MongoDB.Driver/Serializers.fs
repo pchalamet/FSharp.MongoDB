@@ -1,4 +1,4 @@
-﻿namespace MongoDB.Driver.FSharp
+﻿namespace FSharp.MongoDB.Driver
 
 open System
 open Microsoft.FSharp.Reflection
