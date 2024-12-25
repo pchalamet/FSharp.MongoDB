@@ -14,4 +14,3 @@ type internal MapSerializer<'K, 'V when 'K : comparison>() =
     override _.Deserialize(context, args) =
         let dict = contentSerializer.Deserialize(context, args) :?> System.Collections.Generic.IDictionary<'K, 'V>
         dict |> Seq.map (|KeyValue|) |> Map.ofSeq
-
