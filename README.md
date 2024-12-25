@@ -1,5 +1,5 @@
 # FSharp.MongoDB.Driver
-This project takes the [official .NET MongoDB driver][1] and serializers for F# immutable type.
+This project adds support for F# types to the [official .NET MongoDB driver][1].
 
 It's a fork of [MongoDB.FSharp](https://github.com/tkellogg/MongoDB.FSharp) and has been extensively reworked to make it support .net 9 and nullable.
 
