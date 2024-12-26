@@ -1,9 +1,13 @@
-[![Build status](https://github.com/pchalamet/FSharp.MongoDB.Driver/workflows/build/badge.svg)](https://github.com/pchalamet/FSharp.MongoDB.Driver/actions?query=workflow%3Abuild) 
+![Build status](https://github.com/pchalamet/FSharp.MongoDB.Driver/actions/workflows/build.yml/badge.svg?branch=main)
+
+# WARNING
+:exclamation: This is alpha quality. Following cases do not work as of now:
+* DU of record
 
 # FSharp.MongoDB.Driver
 This project adds support for F# types to the [official .NET MongoDB driver][1].
 
-It's a fork of [MongoDB.FSharp](https://github.com/tkellogg/MongoDB.FSharp) and has been extensively reworked to make it support .net 9 and nullable.
+It's a fork of [MongoDB.FSharp](https://github.com/tkellogg/MongoDB.FSharp) and has been extensively reworked to support .net 9 and other features.
 
 Following types are supported:
 * List
@@ -13,13 +17,8 @@ Following types are supported:
 * ValueOption
 * Discriminated Unions
 
-Records are supported as well out of the box with official MongoDB driver. Probably you want to add `CLIMutable` attribute on the record to support automatic ObjectId initialization.
-```
-[<CLIMutable>]
-type RecordTypeOptId =
-    { [<BsonIgnoreIfDefault>] Id : ObjectId
-      Name : string }
-```
+## Breaking changes vs MongoDB.FSharp
+* Discriminated unions are serialized with more information as this now uses DU property names.
 
 # Installation
 Install this project via NuGet.
@@ -61,6 +60,15 @@ Otherwise the value.
 ## Map
 key/value mapping.
 
-# Discriminated Unions
+## Discriminated Unions
 key is the case name.\
 value is an array of the values of the case
+
+## Record
+Records are supported as well out of the box with official MongoDB driver. Probably you want to add `CLIMutable` attribute on the record to support upsert operations.
+```
+[<CLIMutable>]
+type RecordTypeOptId =
+    { [<BsonIgnoreIfDefault>] Id : ObjectId
+      Name : string }
+```

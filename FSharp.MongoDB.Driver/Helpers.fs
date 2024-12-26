@@ -7,8 +7,3 @@ let fsharpType (typ : Type) =
     |> Seq.cast<CompilationMappingAttribute>
     |> Seq.map(fun t -> t.SourceConstructFlags)
     |> Seq.tryHead
-
-let createClassMapSerializer (type': Type) (classMap: BsonClassMap) =
-    let concreteType = type'.MakeGenericType(classMap.ClassType)
-    let ctor = concreteType.GetConstructor([| typeof<BsonClassMap> |])
-    ctor.Invoke([| classMap |]) :?> IBsonSerializer
