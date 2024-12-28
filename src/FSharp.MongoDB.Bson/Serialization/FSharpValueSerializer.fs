@@ -38,9 +38,10 @@ module FSharpValueSerializer =
         interface IBsonSerializationProvider with
 
             member __.GetSerializer typ =
-                let mkSerializer = function
-                | Some (typ:System.Type) -> System.Activator.CreateInstance typ :?> IBsonSerializer
-                | None -> null
+                let mkSerializer typ = 
+                    typ
+                    |> Option.map (fun typ -> System.Activator.CreateInstance typ :?> IBsonSerializer)
+                    |> Option.toObj
 
                 match typ with
                 | IsList typ -> Some (mkGenericUsingDef<FSharpListSerializer<_>> typ)

@@ -87,13 +87,17 @@ module FSharpSetSerialization =
             let value = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
             let result = serialize value
-            let expected = BsonDocument("MaybeStrings", BsonArray (Set.ofList ["a"; null; "z"]))
+            let expected =
+                let values: (string|null) list = [ "a"; null; "z" ]
+                BsonDocument("MaybeStrings", BsonArray (Set.ofList values))
 
             result |> should equal expected
 
         [<Test>]
         let ``test deserialize a set of optional strings``() =
-            let doc = BsonDocument("MaybeStrings", BsonArray [ "a"; null; "z" ])
+            let doc =
+                let values: (string|null) list = [ "a"; null; "z" ]
+                BsonDocument("MaybeStrings", BsonArray values)
 
             let result = deserialize doc typeof<Record>
             let expected = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
