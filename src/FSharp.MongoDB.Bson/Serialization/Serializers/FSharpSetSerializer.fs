@@ -34,9 +34,9 @@ type FSharpSetSerializer<'ElemType when 'ElemType : comparison>() =
     override _.AddItem (accumulator, item) =
         match accumulator with
         | :? List<'ElemType> as lst -> lst.Add item
-        | _ -> failwithf $"Expected accumulator to be a list, but got {accumulator}"
+        | _ -> failwith $"Expected accumulator to be a list, but got {accumulator}"
 
     override _.FinalizeResult accumulator =
         match accumulator with
         | :? List<'ElemType> as lst -> Set.ofSeq lst
-        | _ -> failwithf $"Expected accumulator to be a list, but got {accumulator}"
+        | _ -> failwith $"Expected accumulator to be a list, but got {accumulator}"
