@@ -126,44 +126,19 @@ module IsomorphicSerialization =
         csModel, fsModel
 
     [<Test>]
-    let ``Isomorphic Some cs / fs``() =
+    let ``Isomorphic Bson Some cs / fs``() =
         let csModel, fsModel = ModelSome()
 
         let csDoc = serialize csModel
         let fsDoc = serialize fsModel
-        
-        printfn $"{csDoc}"
-        printfn $"{fsDoc}"
-        
+
         csDoc |> should equal fsDoc
 
     [<Test>]
-    let ``Isomorphic None cs / fs``() =
+    let ``Isomorphic Bson None cs / fs``() =
         let csModel, fsModel = ModelNone()
 
         let csDoc = serialize csModel
         let fsDoc = serialize fsModel
         
         csDoc |> should equal fsDoc
-
-
-
-    // [<Test>]
-    // let ``Isomorphic Some fs -> cs``() =
-    //     let csModel, fsModel = ModelSome()
-    //
-    //     let doc = serialize fsModel
-    //     
-    //     let result = deserialize doc typeof<CSharpDataModels.RecordDataModel>
-    //
-    //     result |> should equal csModel
-    //
-    //
-    // [<Test>]
-    // let ``Isomorphic None fs -> cs``() =
-    //     let csModel, fsModel = ModelNone()
-    //
-    //     let doc = serialize fsModel
-    //     let result = deserialize doc typeof<CSharpDataModels.RecordDataModel>
-    //
-    //     result |> should equal csModel

@@ -34,8 +34,8 @@ module Helpers =
         BsonSerializer.Serialize(writer, value, args = args)
         doc
 
-    let deserialize doc (typ:System.Type) =
+    let deserialize<'T> doc =
         FSharpValueSerializer.register()
 
         use reader = new BsonDocumentReader(doc, BsonDocumentReaderSettings.Defaults)
-        BsonSerializer.Deserialize(reader, typ) |> unbox
+        BsonSerializer.Deserialize<'T>(reader)

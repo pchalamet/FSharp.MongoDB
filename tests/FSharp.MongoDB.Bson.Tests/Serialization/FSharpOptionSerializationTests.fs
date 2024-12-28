@@ -47,7 +47,7 @@ module FSharpOptionSerialization =
     let ``test deserialize optional primitives (none) in a record type)``() =
         let doc = BsonDocument()
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected = { Bool = None
                          Int = None
                          String = None
@@ -77,7 +77,7 @@ module FSharpOptionSerialization =
                                  BsonElement("String", BsonString "1.0")
                                  BsonElement("Float", BsonDouble 1.0) ])
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected = { Bool = Some true
                          Int = Some 1
                          String = Some "1.0"

@@ -50,7 +50,7 @@ module FSharpRecordSerialization =
                                  BsonElement("String", BsonString "1.0")
                                  BsonElement("Float", BsonDouble 1.0) ])
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected = { Bool = true
                          Int = 1
                          String = "1.0"
@@ -75,7 +75,7 @@ module FSharpRecordSerialization =
         let ``test deserialize an internal record type``() =
             let doc = BsonDocument("Field", BsonInt32 1)
 
-            let result = deserialize doc typeof<InternalRecord>
+            let result = deserialize<InternalRecord> doc
             let expected = { Field = 1 }
 
             result |> should equal expected

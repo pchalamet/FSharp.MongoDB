@@ -37,7 +37,7 @@ module FSharpSetSerialization =
     let ``test deserialize an empty set``() =
         let doc = BsonDocument("Ints", BsonArray Set.empty<int>)
 
-        let result = deserialize doc typeof<Record>
+        let result = deserialize<Record> doc
         let expected = { Ints = Set.empty<int> }
 
         result |> should equal expected
@@ -55,7 +55,7 @@ module FSharpSetSerialization =
     let ``test deserialize a set of one element``() =
         let doc = BsonDocument("Ints", BsonArray [ 0 ])
 
-        let result = deserialize doc typeof<Record>
+        let result = deserialize<Record> doc
         let expected = { Ints = Set.ofList [ 0 ] }
 
         result |> should equal expected
@@ -73,7 +73,7 @@ module FSharpSetSerialization =
     let ``test deserialize a set of multiple elements``() =
         let doc = BsonDocument("Ints", BsonArray [ 1; 2; 3 ])
 
-        let result = deserialize doc typeof<Record>
+        let result = deserialize<Record> doc
         let expected = { Ints = Set.ofList [ 1; 2; 3 ] }
 
         result |> should equal expected
@@ -99,7 +99,7 @@ module FSharpSetSerialization =
                 let values: (string|null) list = [ "a"; null; "z" ]
                 BsonDocument("MaybeStrings", BsonArray values)
 
-            let result = deserialize doc typeof<Record>
+            let result = deserialize<Record> doc
             let expected = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
             result |> should equal expected
@@ -143,7 +143,7 @@ module FSharpSetSerialization =
                                 BsonDocument [ BsonElement("Key", BsonString "c")
                                                BsonElement("Value", BsonInt32 3) ] ])
 
-            let result = deserialize doc typeof<Record>
+            let result = deserialize<Record> doc
             let expected = { Elements = Set.ofList [ { Key = "a"; Value = 1 }
                                                      { Key = "b"; Value = 2 }
                                                      { Key = "c"; Value = 3 } ] }
