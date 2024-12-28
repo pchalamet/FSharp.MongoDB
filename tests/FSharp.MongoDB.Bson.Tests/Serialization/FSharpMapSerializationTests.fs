@@ -50,7 +50,7 @@ module FSharpMapSerialization =
                                  BsonElement("String", BsonDocument())
                                  BsonElement("Float", BsonDocument()) ])
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected = { Bool = Map.empty<string, bool>
                          Int = Map.empty<string, int>
                          String = Map.empty<string, string>
@@ -80,7 +80,7 @@ module FSharpMapSerialization =
                                  BsonElement("String", BsonDocument("a", BsonString "0.0"))
                                  BsonElement("Float", BsonDocument("a", BsonDouble 0.0)) ])
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected = { Bool = Map.ofList<string, bool> [ ("a", false) ]
                          Int = Map.ofList<string, int> [ ("a", 0) ]
                          String = Map.ofList<string, string> [ ("a", "0.0") ]
@@ -131,7 +131,7 @@ module FSharpMapSerialization =
                                                       BsonElement("b", BsonDouble 1.0)
                                                       BsonElement("c", BsonDouble 2.0) ])) ])
 
-        let result = deserialize doc typeof<Primitive>
+        let result = deserialize<Primitive> doc
         let expected =
             { Bool = Map.ofList<string, bool> [ ("a", false); ("b", true); ("c", false) ]
               Int = Map.ofList<string, int> [ ("a", 0); ("b", 1); ("c", 2) ]

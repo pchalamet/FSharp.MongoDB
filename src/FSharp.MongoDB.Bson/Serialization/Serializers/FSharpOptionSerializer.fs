@@ -32,7 +32,7 @@ type FSharpOptionSerializer<'T when 'T: not null>() =
         let writer = context.Writer
 
         match value with
-        | Some x -> serializer.Value.Serialize(context, args, x :> obj)
+        | Some x -> serializer.Value.Serialize<'T>(context, x)
         | None -> writer.WriteNull()
 
     override _.Deserialize (context, args) =

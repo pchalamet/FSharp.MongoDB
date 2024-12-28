@@ -20,44 +20,20 @@ open MongoDB.Bson
 open FsUnit
 open NUnit.Framework
 
-module FSharpOptionSerialization =
+module FSharpRecordSerialization =
 
     type Primitive =
-        { Bool : bool option
-          Int : int option
-          String : string option
-          Float : float option }
+        { Bool : bool
+          Int : int
+          String : string
+          Float : float }
 
     [<Test>]
-    let ``test serialize optional primitives (none) in a record type``() =
-        let value =  { Bool = None
-                       Int = None
-                       String = None
-                       Float = None }
-
-        let result = serialize value
-        let expected = BsonDocument()
-
-        result |> should equal expected
-
-    [<Test>]
-    let ``test deserialize optional primitives (none) in a record type)``() =
-        let doc = BsonDocument()
-
-        let result = deserialize doc typeof<Primitive>
-        let expected = { Bool = None
-                         Int = None
-                         String = None
-                         Float = None }
-
-        result |> should equal expected
-
-    [<Test>]
-    let ``test serialize optional primitives (some) in a record type``() =
-        let value =  { Bool = Some false
-                       Int = Some 0
-                       String = Some "0.0"
-                       Float = Some 0.0 }
+    let ``test serialize primitives in a record type``() =
+        let value = { Bool = false
+                      Int = 0
+                      String = "0.0"
+                      Float = 0.0 }
 
         let result = serialize value
         let expected = BsonDocument([ BsonElement("Bool", BsonBoolean false)
@@ -68,16 +44,38 @@ module FSharpOptionSerialization =
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize optional primitives (some) in a record type``() =
+    let ``test deserialize primitives in a record type``() =
         let doc = BsonDocument([ BsonElement("Bool", BsonBoolean true)
                                  BsonElement("Int", BsonInt32 1)
                                  BsonElement("String", BsonString "1.0")
                                  BsonElement("Float", BsonDouble 1.0) ])
 
-        let result = deserialize doc typeof<Primitive>
-        let expected = { Bool = Some true
-                         Int = Some 1
-                         String = Some "1.0"
-                         Float = Some 1.0 }
+        let result = deserialize<Primitive> doc
+        let expected = { Bool = true
+                         Int = 1
+                         String = "1.0"
+                         Float = 1.0 }
 
         result |> should equal expected
+
+    module BindingFlags =
+
+        type internal InternalRecord = { Field : int }
+
+        [<Test>]
+        let ``test serialize an internal record type``() =
+            let value = { Field = 0 }
+
+            let result = serialize value
+            let expected = BsonDocument("Field", BsonInt32 0)
+
+            result |> should equal expected
+
+        [<Test>]
+        let ``test deserialize an internal record type``() =
+            let doc = BsonDocument("Field", BsonInt32 1)
+
+            let result = deserialize<InternalRecord> doc
+            let expected = { Field = 1 }
+
+            result |> should equal expected

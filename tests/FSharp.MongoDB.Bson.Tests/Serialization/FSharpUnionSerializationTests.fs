@@ -53,7 +53,7 @@ module FSharpUnionSerialization =
           (Float 1.0, BsonDocument([ BsonElement("_t", BsonString "Float")
                                      BsonElement("Item", BsonDouble 1.0) ])) ]
         |> List.iter (fun (expected, doc) ->
-            let result = deserialize doc typeof<Primitive>
+            let result = deserialize<Primitive> doc
             result |> should equal expected)
 
     module Arity =
@@ -77,7 +77,7 @@ module FSharpUnionSerialization =
         let ``test deserialize a union case with arity 0``() =
             let doc = BsonDocument([ BsonElement("_t", BsonString "Zero") ])
 
-            let result = deserialize doc typeof<Number>
+            let result = deserialize<Number> doc
             let expected = Zero
 
             result |> should equal expected
@@ -97,7 +97,7 @@ module FSharpUnionSerialization =
             let doc = BsonDocument([ BsonElement("_t", BsonString "One")
                                      BsonElement("Item", BsonInt32 1) ])
 
-            let result = deserialize doc typeof<Number>
+            let result = deserialize<Number> doc
             let expected = One 1
 
             result |> should equal expected
@@ -119,7 +119,7 @@ module FSharpUnionSerialization =
                                      BsonElement("Item1", BsonInt32 1)
                                      BsonElement("Item2", BsonInt32 2) ])
 
-            let result = deserialize doc typeof<Number>
+            let result = deserialize<Number> doc
             let expected = Two (1, 2)
 
             result |> should equal expected
@@ -143,7 +143,7 @@ module FSharpUnionSerialization =
                                      BsonElement("Item2", BsonInt32 2)
                                      BsonElement("Item3", BsonInt32 3) ])
 
-            let result = deserialize doc typeof<Number>
+            let result = deserialize<Number> doc
             let expected = Three (1, 2, 3)
 
             result |> should equal expected
@@ -173,7 +173,7 @@ module FSharpUnionSerialization =
               (C, BsonDocument([ BsonElement("_t", BsonString "C") ]))
               (D, BsonDocument([ BsonElement("_t", BsonString "D") ])) ]
             |> List.iter (fun (expected, doc) ->
-                let result = deserialize doc typeof<Letter>
+                let result = deserialize<Letter> doc
                 result |> should equal expected)
 
     module Singleton =
@@ -203,7 +203,7 @@ module FSharpUnionSerialization =
         let ``test deserialize a singleton union type with arity 0``() =
             let doc = BsonDocument([ BsonElement("_t", BsonString "Case") ])
 
-            let result = deserialize doc typeof<Only0>
+            let result = deserialize<Only0> doc
             let expected = Only0.Case
 
             result |> should equal expected
@@ -223,7 +223,7 @@ module FSharpUnionSerialization =
             let doc = BsonDocument([ BsonElement("_t", BsonString "Case")
                                      BsonElement("Item", BsonInt32 1) ])
 
-            let result = deserialize doc typeof<Only1>
+            let result = deserialize<Only1> doc
             let expected = Only1.Case 1
 
             result |> should equal expected
@@ -245,7 +245,7 @@ module FSharpUnionSerialization =
                                      BsonElement("Item1", BsonInt32 1)
                                      BsonElement("Item2", BsonInt32 2) ])
 
-            let result = deserialize doc typeof<Only2>
+            let result = deserialize<Only2> doc
             let expected = Only2.Case (1, 2)
 
             result |> should equal expected
@@ -269,7 +269,7 @@ module FSharpUnionSerialization =
                                      BsonElement("Item2", BsonInt32 2)
                                      BsonElement("Item3", BsonInt32 3) ])
 
-            let result = deserialize doc typeof<Only3>
+            let result = deserialize<Only3> doc
             let expected = Only3.Case (1, 2, 3)
 
             result |> should equal expected
@@ -293,7 +293,7 @@ module FSharpUnionSerialization =
         let ``test deserialize an internal null union case``() =
             let doc = BsonDocument("_t", BsonString "Null")
 
-            let result = deserialize doc typeof<InternalUnion>
+            let result = deserialize<InternalUnion> doc
             let expected = Null
 
             result |> should equal expected
@@ -312,7 +312,7 @@ module FSharpUnionSerialization =
             let doc = BsonDocument([ BsonElement("_t", BsonString "NonNull")
                                      BsonElement("Item", BsonInt32 1) ])
 
-            let result = deserialize doc typeof<InternalUnion>
+            let result = deserialize<InternalUnion> doc
             let expected = NonNull 1
 
             result |> should equal expected

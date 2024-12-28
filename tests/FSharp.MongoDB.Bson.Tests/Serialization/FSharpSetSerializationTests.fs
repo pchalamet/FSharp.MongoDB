@@ -20,31 +20,31 @@ open MongoDB.Bson
 open FsUnit
 open NUnit.Framework
 
-module FSharpListSerialization =
+module FSharpSetSerialization =
 
-    type Record = { Ints : int list }
+    type Record = { Ints : Set<int> }
 
     [<Test>]
-    let ``test serialize an empty list``() =
-        let value = { Ints = [] }
+    let ``test serialize an empty set``() =
+        let value = { Ints = Set.empty<int> }
 
         let result = serialize value
-        let expected = BsonDocument("Ints", BsonArray List.empty<int>)
+        let expected = BsonDocument("Ints", BsonArray Set.empty<int>)
 
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize an empty list``() =
-        let doc = BsonDocument("Ints", BsonArray List.empty<int>)
+    let ``test deserialize an empty set``() =
+        let doc = BsonDocument("Ints", BsonArray Set.empty<int>)
 
-        let result = deserialize doc typeof<Record>
-        let expected = { Ints = [] }
+        let result = deserialize<Record> doc
+        let expected = { Ints = Set.empty<int> }
 
         result |> should equal expected
 
     [<Test>]
-    let ``test serialize a list of one element``() =
-        let value = { Ints = [ 0 ] }
+    let ``test serialize a set of one element``() =
+        let value = { Ints = Set.ofList [ 0 ] }
 
         let result = serialize value
         let expected = BsonDocument("Ints", BsonArray [ 0 ])
@@ -52,55 +52,55 @@ module FSharpListSerialization =
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize a list of one element``() =
+    let ``test deserialize a set of one element``() =
         let doc = BsonDocument("Ints", BsonArray [ 0 ])
 
-        let result = deserialize doc typeof<Record>
-        let expected = { Ints = [ 0 ] }
+        let result = deserialize<Record> doc
+        let expected = { Ints = Set.ofList [ 0 ] }
 
         result |> should equal expected
 
     [<Test>]
-    let ``test serialize a list of multiple elements``() =
-        let value = { Ints = [ 1; 2; 3 ] }
+    let ``test serialize a set of multiple elements``() =
+        let value = { Ints = Set.ofList [ 1; 2; 3 ] }
 
         let result = serialize value
-        let expected = BsonDocument("Ints", BsonArray [ 1; 2; 3 ])
+        let expected = BsonDocument("Ints", BsonArray (Set.ofList [ 1; 2; 3 ]))
 
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize a list of multiple elements``() =
+    let ``test deserialize a set of multiple elements``() =
         let doc = BsonDocument("Ints", BsonArray [ 1; 2; 3 ])
 
-        let result = deserialize doc typeof<Record>
-        let expected = { Ints = [ 1; 2; 3 ] }
+        let result = deserialize<Record> doc
+        let expected = { Ints = Set.ofList [ 1; 2; 3 ] }
 
         result |> should equal expected
 
     module OptionType =
 
-        type Record = { MaybeStrings : string option list }
+        type Record = { MaybeStrings : Set<string option> }
 
         [<Test>]
-        let ``test serialize a list of optional strings``() =
-            let value = { MaybeStrings = [ Some "a"; None; Some "z" ] }
+        let ``test serialize a set of optional strings``() =
+            let value = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
             let result = serialize value
             let expected =
-                let values: (string|null) array = [| "a"; null; "z" |]
-                BsonDocument("MaybeStrings", BsonArray values)
+                let values: (string|null) list = [ "a"; null; "z" ]
+                BsonDocument("MaybeStrings", BsonArray (Set.ofList values))
 
             result |> should equal expected
 
         [<Test>]
-        let ``test deserialize a list of optional strings``() =
+        let ``test deserialize a set of optional strings``() =
             let doc =
-                let values: (string | null) array = [| "a"; null; "z" |]
+                let values: (string|null) list = [ "a"; null; "z" ]
                 BsonDocument("MaybeStrings", BsonArray values)
 
-            let result = deserialize doc typeof<Record>
-            let expected = { MaybeStrings = [ Some "a"; None; Some "z" ] }
+            let result = deserialize<Record> doc
+            let expected = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
             result |> should equal expected
 
@@ -110,13 +110,13 @@ module FSharpListSerialization =
             { Key : string
               Value : int }
 
-        type Record = { Elements : KeyValuePair list }
+        type Record = { Elements : Set<KeyValuePair> }
 
         [<Test>]
-        let ``test serialize a list of record types``() =
-            let value = { Elements = [ { Key = "a"; Value = 1 }
-                                       { Key = "b"; Value = 2 }
-                                       { Key = "c"; Value = 3 } ] }
+        let ``test serialize a set of record types``() =
+            let value = { Elements = Set.ofList [ { Key = "a"; Value = 1 }
+                                                  { Key = "b"; Value = 2 }
+                                                  { Key = "c"; Value = 3 } ] }
 
             let result = serialize value
             let expected =
@@ -132,7 +132,7 @@ module FSharpListSerialization =
             result |> should equal expected
 
         [<Test>]
-        let ``test deserialize a list of record types``() =
+        let ``test deserialize a set of record types``() =
             let doc =
                 BsonDocument(
                     "Elements",
@@ -143,9 +143,9 @@ module FSharpListSerialization =
                                 BsonDocument [ BsonElement("Key", BsonString "c")
                                                BsonElement("Value", BsonInt32 3) ] ])
 
-            let result = deserialize doc typeof<Record>
-            let expected = { Elements = [ { Key = "a"; Value = 1 }
-                                          { Key = "b"; Value = 2 }
-                                          { Key = "c"; Value = 3 } ] }
+            let result = deserialize<Record> doc
+            let expected = { Elements = Set.ofList [ { Key = "a"; Value = 1 }
+                                                     { Key = "b"; Value = 2 }
+                                                     { Key = "c"; Value = 3 } ] }
 
             result |> should equal expected
