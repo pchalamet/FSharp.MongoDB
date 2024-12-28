@@ -15,10 +15,10 @@
 
 namespace FSharp.MongoDB.Bson.Tests.Serialization
 
+open FsUnit
 open MongoDB.Bson
 
 open NUnit.Framework
-open Swensen.Unquote
 
 module FSharpMapSerialization =
 
@@ -35,13 +35,13 @@ module FSharpMapSerialization =
                       String = Map.empty<string, string>
                       Float = Map.empty<string, float> }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument([ BsonElement("Bool", BsonDocument())
                                       BsonElement("Int", BsonDocument())
                                       BsonElement("String", BsonDocument())
                                       BsonElement("Float", BsonDocument()) ])
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize an empty map``() =
@@ -50,13 +50,13 @@ module FSharpMapSerialization =
                                  BsonElement("String", BsonDocument())
                                  BsonElement("Float", BsonDocument()) ])
 
-        let result = <@ deserialize doc typeof<Primitive> @>
+        let result = deserialize doc typeof<Primitive>
         let expected = { Bool = Map.empty<string, bool>
                          Int = Map.empty<string, int>
                          String = Map.empty<string, string>
                          Float = Map.empty<string, float> }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test serialize a map of one element``() =
@@ -65,13 +65,13 @@ module FSharpMapSerialization =
                       String = Map.ofList<string, string> [ ("a", "0.0") ]
                       Float = Map.ofList<string, float> [ ("a", 0.0) ] }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument([ BsonElement("Bool", BsonDocument("a", BsonBoolean false))
                                       BsonElement("Int", BsonDocument("a", BsonInt32 0))
                                       BsonElement("String", BsonDocument("a", BsonString "0.0"))
                                       BsonElement("Float", BsonDocument("a", BsonDouble 0.0)) ])
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize a map of one element``() =
@@ -80,13 +80,13 @@ module FSharpMapSerialization =
                                  BsonElement("String", BsonDocument("a", BsonString "0.0"))
                                  BsonElement("Float", BsonDocument("a", BsonDouble 0.0)) ])
 
-        let result = <@ deserialize doc typeof<Primitive> @>
+        let result = deserialize doc typeof<Primitive>
         let expected = { Bool = Map.ofList<string, bool> [ ("a", false) ]
                          Int = Map.ofList<string, int> [ ("a", 0) ]
                          String = Map.ofList<string, string> [ ("a", "0.0") ]
                          Float = Map.ofList<string, float> [ ("a", 0.0) ] }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test serialize a map of multiple elements``() =
@@ -96,7 +96,7 @@ module FSharpMapSerialization =
               String = Map.ofList<string, string> [ ("a", "0.0"); ("b", "1.0"); ("c", "2.0") ]
               Float = Map.ofList<string, float> [ ("a", 0.0); ("b", 1.0); ("c", 2.0) ] }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected =
             BsonDocument(
                 [ BsonElement("Bool", BsonDocument([ BsonElement("a", BsonBoolean false)
@@ -112,7 +112,7 @@ module FSharpMapSerialization =
                                                       BsonElement("b", BsonDouble 1.0)
                                                       BsonElement("c", BsonDouble 2.0) ])) ])
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize a map of multiple elements``() =
@@ -131,11 +131,11 @@ module FSharpMapSerialization =
                                                       BsonElement("b", BsonDouble 1.0)
                                                       BsonElement("c", BsonDouble 2.0) ])) ])
 
-        let result = <@ deserialize doc typeof<Primitive> @>
+        let result = deserialize doc typeof<Primitive>
         let expected =
             { Bool = Map.ofList<string, bool> [ ("a", false); ("b", true); ("c", false) ]
               Int = Map.ofList<string, int> [ ("a", 0); ("b", 1); ("c", 2) ]
               String = Map.ofList<string, string> [ ("a", "0.0"); ("b", "1.0"); ("c", "2.0") ]
               Float = Map.ofList<string, float> [ ("a", 0.0); ("b", 1.0); ("c", 2.0) ] }
 
-        test <@ %result = expected @>
+        result |> should equal expected
