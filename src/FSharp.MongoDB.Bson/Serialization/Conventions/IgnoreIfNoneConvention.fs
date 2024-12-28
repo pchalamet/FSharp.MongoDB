@@ -15,6 +15,7 @@
 
 namespace FSharp.MongoDB.Bson.Serialization.Conventions
 
+open Microsoft.FSharp.Reflection
 open MongoDB.Bson.Serialization.Conventions
 
 open FSharp.MongoDB.Bson.Serialization.Helpers
@@ -30,6 +31,15 @@ type IgnoreIfNoneConvention() =
         member _.Apply memberMap =
             match memberMap.MemberType with
             | IsOption _ ->
-                memberMap.SetDefaultValue None |> ignore
+                let optionType = mkGenericUsingDef<_ option> memberMap.MemberType
+                let unionCase = FSharpType.GetUnionCases(optionType) |> Array.find (fun case -> case.Name = "None")
+                let noneValue = FSharpValue.MakeUnion(unionCase, [||])
+                memberMap.SetDefaultValue noneValue |> ignore
+                memberMap.SetIgnoreIfDefault true |> ignore
+            | IsValueOption _ ->
+                let voptionType = mkGenericUsingDef<_ voption> memberMap.MemberType
+                let unionCase = FSharpType.GetUnionCases(voptionType) |> Array.find (fun case -> case.Name = "ValueNone")
+                let vnoneValue = FSharpValue.MakeUnion(unionCase, [||])
+                memberMap.SetDefaultValue vnoneValue |> ignore
                 memberMap.SetIgnoreIfDefault true |> ignore
             | _ -> ()

@@ -36,19 +36,13 @@ module FSharpValueOptionSerialization =
                        Float = ValueNone }
 
         let result = serialize value
-        let expected = BsonDocument([ BsonElement("Bool", BsonNull.Value)
-                                      BsonElement("Int", BsonNull.Value)
-                                      BsonElement("String", BsonNull.Value)
-                                      BsonElement("Float", BsonNull.Value) ])
+        let expected = BsonDocument()
 
         result |> should equal expected
 
     [<Test>]
     let ``test deserialize value optional primitives (valuenone) in a record type)``() =
-        let doc = BsonDocument([ BsonElement("Bool", BsonNull.Value)
-                                 BsonElement("Int", BsonNull.Value)
-                                 BsonElement("String", BsonNull.Value)
-                                 BsonElement("Float", BsonNull.Value) ])
+        let doc = BsonDocument()
 
         let result = deserialize doc typeof<Primitive>
         let expected = { Bool = ValueNone
