@@ -27,7 +27,7 @@ type IgnoreIfNoneConvention() =
     inherit ConventionBase()
 
     interface IMemberMapConvention with
-        member __.Apply memberMap =
+        member _.Apply memberMap =
             match memberMap.MemberType with
             | IsOption _ ->
                 memberMap.SetDefaultValue None |> ignore

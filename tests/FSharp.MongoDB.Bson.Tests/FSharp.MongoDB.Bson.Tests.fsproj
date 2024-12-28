@@ -11,6 +11,7 @@
     <Compile Include="FSharpListSerializationTests.fs" />
     <Compile Include="FSharpMapSerializationTests.fs" />
     <Compile Include="FSharpOptionSerializationTests.fs" />
+    <Compile Include="FSharpValueOptionSerializationTests.fs" />
     <Compile Include="FSharpRecordSerializationTests.fs" />
     <Compile Include="FSharpSetSerializationTests.fs" />
     <Compile Include="FSharpUnionSerializationTests.fs" />
