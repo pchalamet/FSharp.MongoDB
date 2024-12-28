@@ -24,12 +24,13 @@ open FSharp.MongoDB.Bson.Serialization
 [<AutoOpen>]
 module Helpers =
 
-    let serialize value =
+    let serialize<'T> (value: 'T) =
         FSharpValueSerializer.register()
 
         let doc = BsonDocument()
         use writer = new BsonDocumentWriter(doc, BsonDocumentWriterSettings.Defaults)
-        let args = BsonSerializationArgs(value.GetType(), false, false)
+        let typ = typeof<'T>
+        let args = BsonSerializationArgs(typ, true, true)
         BsonSerializer.Serialize(writer, value, args = args)
         doc
 

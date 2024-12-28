@@ -17,8 +17,8 @@ namespace FSharp.MongoDB.Bson.Tests.Serialization
 
 open MongoDB.Bson
 
+open FsUnit
 open NUnit.Framework
-open Swensen.Unquote
 
 module FSharpSetSerialization =
 
@@ -28,55 +28,55 @@ module FSharpSetSerialization =
     let ``test serialize an empty set``() =
         let value = { Ints = Set.empty<int> }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument("Ints", BsonArray Set.empty<int>)
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize an empty set``() =
         let doc = BsonDocument("Ints", BsonArray Set.empty<int>)
 
-        let result = <@ deserialize doc typeof<Record> @>
+        let result = deserialize doc typeof<Record>
         let expected = { Ints = Set.empty<int> }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test serialize a set of one element``() =
         let value = { Ints = Set.ofList [ 0 ] }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument("Ints", BsonArray [ 0 ])
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize a set of one element``() =
         let doc = BsonDocument("Ints", BsonArray [ 0 ])
 
-        let result = <@ deserialize doc typeof<Record> @>
+        let result = deserialize doc typeof<Record>
         let expected = { Ints = Set.ofList [ 0 ] }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test serialize a set of multiple elements``() =
         let value = { Ints = Set.ofList [ 1; 2; 3 ] }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument("Ints", BsonArray (Set.ofList [ 1; 2; 3 ]))
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize a set of multiple elements``() =
         let doc = BsonDocument("Ints", BsonArray [ 1; 2; 3 ])
 
-        let result = <@ deserialize doc typeof<Record> @>
+        let result = deserialize doc typeof<Record>
         let expected = { Ints = Set.ofList [ 1; 2; 3 ] }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     module OptionType =
 
@@ -86,19 +86,19 @@ module FSharpSetSerialization =
         let ``test serialize a set of optional strings``() =
             let value = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
-            let result = <@ serialize value @>
+            let result = serialize value
             let expected = BsonDocument("MaybeStrings", BsonArray (Set.ofList ["a"; null; "z"]))
 
-            test <@ %result = expected @>
+            result |> should equal expected
 
         [<Test>]
         let ``test deserialize a set of optional strings``() =
             let doc = BsonDocument("MaybeStrings", BsonArray [ "a"; null; "z" ])
 
-            let result = <@ deserialize doc typeof<Record> @>
+            let result = deserialize doc typeof<Record>
             let expected = { MaybeStrings = Set.ofList [ Some "a"; None; Some "z" ] }
 
-            test <@ %result = expected @>
+            result |> should equal expected
 
     module RecordType =
 
@@ -114,7 +114,7 @@ module FSharpSetSerialization =
                                                   { Key = "b"; Value = 2 }
                                                   { Key = "c"; Value = 3 } ] }
 
-            let result = <@ serialize value @>
+            let result = serialize value
             let expected =
                 BsonDocument(
                     "Elements",
@@ -125,7 +125,7 @@ module FSharpSetSerialization =
                                 BsonDocument [ BsonElement("Key", BsonString "c")
                                                BsonElement("Value", BsonInt32 3) ] ])
 
-            test <@ %result = expected @>
+            result |> should equal expected
 
         [<Test>]
         let ``test deserialize a set of record types``() =
@@ -139,9 +139,9 @@ module FSharpSetSerialization =
                                 BsonDocument [ BsonElement("Key", BsonString "c")
                                                BsonElement("Value", BsonInt32 3) ] ])
 
-            let result = <@ deserialize doc typeof<Record> @>
+            let result = deserialize doc typeof<Record>
             let expected = { Elements = Set.ofList [ { Key = "a"; Value = 1 }
                                                      { Key = "b"; Value = 2 }
                                                      { Key = "c"; Value = 3 } ] }
 
-            test <@ %result = expected @>
+            result |> should equal expected

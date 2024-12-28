@@ -17,8 +17,8 @@ namespace FSharp.MongoDB.Bson.Tests.Serialization
 
 open MongoDB.Bson
 
+open FsUnit
 open NUnit.Framework
-open Swensen.Unquote
 
 module FSharpRecordSerialization =
 
@@ -35,13 +35,13 @@ module FSharpRecordSerialization =
                       String = "0.0"
                       Float = 0.0 }
 
-        let result = <@ serialize value @>
+        let result = serialize value
         let expected = BsonDocument([ BsonElement("Bool", BsonBoolean false)
                                       BsonElement("Int", BsonInt32 0)
                                       BsonElement("String", BsonString "0.0")
                                       BsonElement("Float", BsonDouble 0.0) ])
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     [<Test>]
     let ``test deserialize primitives in a record type``() =
@@ -50,13 +50,13 @@ module FSharpRecordSerialization =
                                  BsonElement("String", BsonString "1.0")
                                  BsonElement("Float", BsonDouble 1.0) ])
 
-        let result = <@ deserialize doc typeof<Primitive> @>
+        let result = deserialize doc typeof<Primitive>
         let expected = { Bool = true
                          Int = 1
                          String = "1.0"
                          Float = 1.0 }
 
-        test <@ %result = expected @>
+        result |> should equal expected
 
     module BindingFlags =
 
@@ -66,16 +66,16 @@ module FSharpRecordSerialization =
         let ``test serialize an internal record type``() =
             let value = { Field = 0 }
 
-            let result = <@ serialize value @>
+            let result = serialize value
             let expected = BsonDocument("Field", BsonInt32 0)
 
-            test <@ %result = expected @>
+            result |> should equal expected
 
         [<Test>]
         let ``test deserialize an internal record type``() =
             let doc = BsonDocument("Field", BsonInt32 1)
 
-            let result = <@ deserialize doc typeof<InternalRecord> @>
+            let result = deserialize doc typeof<InternalRecord>
             let expected = { Field = 1 }
 
-            test <@ %result = expected @>
+            result |> should equal expected
