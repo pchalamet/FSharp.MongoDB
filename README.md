@@ -40,7 +40,7 @@ FSharp.MongoDB | [![Nuget](https://img.shields.io/nuget/v/FSharp.MongoDB)](https
 
 On startup you have to register serializers:
 ```ocaml
-MongoDB.Bson.Serialization.FSharpSerializer.register()
+MongoDB.Bson.Serialization.FSharp.register()
 ```
 
 # License

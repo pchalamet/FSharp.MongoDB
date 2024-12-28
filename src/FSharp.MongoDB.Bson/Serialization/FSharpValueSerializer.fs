@@ -22,7 +22,7 @@ open MongoDB.Bson.Serialization.Serializers
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 [<RequireQualifiedAccess>]
-module FSharpSerializer =
+module FSharp =
 
     /// <summary>
     /// Provides (de)serialization of F# data types, including lists, maps, options, records, sets,
