@@ -1,5 +1,3 @@
-![Build status](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/build.yml/badge.svg?branch=main)
-
 # FSharp.MongoDB
 
 > an F# interface for the MongoDB .NET driver
@@ -47,6 +45,11 @@ MongoDB.Bson.Serialization.FSharpSerializer.register()
 
 # License
 The contents of this library are made available under the [Apache License, Version 2.0][license].
+
+# Build Status
+
+![Build status](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/on-push-branch.yml/badge.svg?branch=main)
+
 
   [csharp_driver]: https://github.com/mongodb/mongo-csharp-driver
   [issues]:        https://github.com/pchalamet/FSharp.MongoDB/issues
