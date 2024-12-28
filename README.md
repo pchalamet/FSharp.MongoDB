@@ -48,7 +48,7 @@ The contents of this library are made available under the [Apache License, Versi
 
 # Build Status
 
-![Build status](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/on-push-branch.yml/badge.svg?branch=main)
+[![Build status](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/on-push-branch.yml/badge.svg?branch=main)](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/on-push-branch.yml)
 
 
   [csharp_driver]: https://github.com/mongodb/mongo-csharp-driver
