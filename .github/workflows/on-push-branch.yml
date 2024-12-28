@@ -21,7 +21,7 @@ jobs:
           dotnet-version: 9.0.100
   
       - name: Build & Test
-        run: make test config=Release version=${{ env.BUILD_VERSION }}
+        run: make test config=Release
 
       - name: Create Test Report
         uses: magnusopera/test-reporter@main
@@ -35,4 +35,4 @@ jobs:
           use-actions-summary: true
 
       - name: Build NuGet
-        run: make nuget config=Release version=${{ env.BUILD_VERSION }}
+        run: make nuget config=Release
