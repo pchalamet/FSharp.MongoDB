@@ -1,66 +1,54 @@
-# FSharp.MongoDB history
+![Build status](https://github.com/pchalamet/FSharp.MongoDB/actions/workflows/build.yml/badge.svg?branch=main)
 
-Starting from this commit, this repository has been pruned and updated to netstandard 2.1.
-
-Repository origins are:
-* Initial repository: https://github.com/mongodb-labs/mongo-fsharp-driver-prototype
-* Forked by @visemet (Max Hirschhorn): https://github.com/visemet/FSharp.MongoDB
-
-
-
-
-
-FSharp.MongoDB
-==============
+# FSharp.MongoDB
 
 > an F# interface for the MongoDB .NET driver
 
-**Disclaimer.** This is an experimental project being maintained in my _infinite free time_. It is
-in no way supported by MongoDB, Inc., and probably shouldn't be used in production.
-
-### Goals of this project
+## Goals of this project
 
   * Provide an idiomatic F# API for interacting with MongoDB.
   * Have an implementation that is fully testable without connecting to a server.
+  
+## FSharp.MongoDB history
 
-### Non-goals of this project
+Repository origins are:
+  1. Initial repository: https://github.com/mongodb-labs/mongo-fsharp-driver-prototype
+  1. Fork by @visemet (Max Hirschhorn): https://github.com/visemet/FSharp.MongoDB
+  1. This repository: migrated to netstandard 2.1, nullable, adds new features (C#/F# isomomorphic serialization, voption support...)
+  
+## Building
+  * build using the top-level solution file (`FSharp.MongoDB.sln`).
+  * you can use `make` with target `build` or `test`.
 
-  * Have feature parity with the [C# driver][csharp_driver].
+## Supported platforms
 
-Building
---------
+This project targets `netstandard2.1` ([compatible runtimes](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-1#select-net-standard-version)). 
 
-  - Simply build the `FSharpDriver-2012.sln` solution in Visual Studio, Xamarin Studio, or Mono
-    Develop. You can also run the FAKE script
+## Contributing
+  * If you have a question about the library, then create an [issue][issues] with the `question` label.
+  * If you'd like to report a bug or submit a feature request, then create an [issue][issues] with the appropriate label.
+  * If you'd like to contribute, then feel free to send a [pull request][pull_requests].
 
-      * `build.cmd` on Windows.
-      * `build.sh` on Linux or OS X.
+# Usage
 
-### Supported F# runtimes
+## Installation
+To serialize F# types, first install this project via NuGet:
 
-  - FSharp.Core v4.3.0.0 (F# 3.0)
-  - FSharp.Core v4.3.1.0 (F# 3.1)
-  - FSharp.Core v4.4.0.0 (F# 4.0)
+Package | Status | Description
+--------|--------|------------
+FSharp.MongoDB | [![Nuget](https://img.shields.io/nuget/v/FSharp.MongoDB)](https://nuget.org/packages/FSharp.MongoDB) | Add F# support to MongoDB.Driver
 
-### Supported platforms
+## Register
 
-  - .NET Framework 4.5
+On startup you have to register serializers:
+```ocaml
+MongoDB.Bson.Serialization.FSharpSerializer.register()
+```
 
-Contributing
-------------
-
-  - If you have a question about the library, then create an [issue][issues] with the `question`
-    label.
-  - If you'd like to report a bug or submit a feature request, then create an [issue][issues] with
-    the appropriate label.
-  - If you'd like to contribute, then feel free to send a [pull request][pull_requests].
-
-License
--------
-
+# License
 The contents of this library are made available under the [Apache License, Version 2.0][license].
 
   [csharp_driver]: https://github.com/mongodb/mongo-csharp-driver
-  [issues]:        https://github.com/visemet/FSharp.MongoDB/issues
+  [issues]:        https://github.com/pchalamet/FSharp.MongoDB/issues
   [license]:       LICENSE
-  [pull_requests]: https://github.com/visemet/FSharp.MongoDB/pulls
+  [pull_requests]: https://github.com/pchalamet/FSharp.MongoDB/pulls
