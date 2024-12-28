@@ -36,7 +36,8 @@ type IgnoreIfNoneConvention() =
                 
             match memberMap.MemberType with
             | IsOption _ ->
-                mkGenericUsingDef<_ option> memberMap.MemberType |> setDefaultValue "None"
+                // Option uses UseNullAsTrueValue
+                memberMap.SetDefaultValue null |> ignore
                 memberMap.SetIgnoreIfDefault true |> ignore
             | IsValueOption _ ->
                 mkGenericUsingDef<_ voption> memberMap.MemberType |> setDefaultValue "ValueNone"
