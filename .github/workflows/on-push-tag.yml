@@ -1,0 +1,58 @@
+name: 🍿 On Push Tag
+run-name: Prepare release ${{github.ref_name}}
+
+on:
+  push:
+    tags:
+      - '**'
+
+env:
+  BUILD_VERSION: ${{ github.ref_name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.100
+
+      - name: Extract Version Suffix
+        run: |
+          s=${{github.ref_name}}
+          pat="([^-]*)-?([^-]*)"
+          [[ $s =~ $pat ]]
+          BUILD_VERSION_SUFFIX=${BASH_REMATCH[2]}
+          echo "BUILD_VERSION_SUFFIX=$BUILD_VERSION_SUFFIX" >> $GITHUB_ENV
+          echo "BUILD_VERSION_SUFFIX: $BUILD_VERSION_SUFFIX"
+
+      - name: Build & Test
+        run: make test config=Release version=${{ env.BUILD_VERSION }}
+
+      - name: Create Test Report
+        uses: magnusopera/test-reporter@main
+        if: always()
+        with:
+          name: Unit Tests Report
+          path: '**/*.trx'
+          reporter: dotnet-trx
+          fail-on-error: false
+          fail-on-empty: false
+          use-actions-summary: true
+
+      - name: Build NuGet
+        run: make nuget config=Release version=${{ env.BUILD_VERSION }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2.0.6
+        with:
+          draft: true
+          prerelease: ${{ env.BUILD_VERSION_SUFFIX != '' }}
+          generate_release_notes: true
+          files:
+            .out/*.nupkg
