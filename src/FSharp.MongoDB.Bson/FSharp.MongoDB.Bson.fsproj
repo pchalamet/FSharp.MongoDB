@@ -14,6 +14,7 @@
     <Compile Include="Serialization\Serializers\FSharpListSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpMapSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpOptionSerializer.fs" />
+    <Compile Include="Serialization\Serializers\FSharpValueOptionSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpSetSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpUnionSerializer.fs" />
     <Compile Include="Serialization\FSharpValueSerializer.fs" />

@@ -68,6 +68,11 @@ module private Helpers =
     let (|IsOption|_|) typ = whenType isGeneric<_ option> typ
 
     /// <summary>
+    /// Returns <c>Some typ</c> when <c>typ</c> is an voption type, and <c>None</c> otherwise.
+    /// </summary>
+    let (|IsValueOption|_|) typ = whenType isGeneric<_ voption> typ
+
+    /// <summary>
     /// Returns <c>Some typ</c> when <c>typ</c> represents a set, and <c>None</c> otherwise.
     /// </summary>
     let (|IsSet|_|) typ = whenType isGeneric<Set<_>> typ

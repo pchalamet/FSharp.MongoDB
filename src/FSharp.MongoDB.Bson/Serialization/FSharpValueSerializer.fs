@@ -46,6 +46,7 @@ module FSharpValueSerializer =
                 | IsList typ -> Some (mkGenericUsingDef<FSharpListSerializer<_>> typ)
                 | IsMap typ -> Some (mkGenericUsingDef<FSharpMapSerializer<_, _>> typ)
                 | IsOption typ -> Some (mkGenericUsingDef<FSharpOptionSerializer<_>> typ)
+                | IsValueOption typ -> Some (mkGenericUsingDef<FSharpValueOptionSerializer<_>> typ)
                 | IsSet typ -> Some (mkGenericUsingDef<FSharpSetSerializer<_>> typ)
                 | IsUnion typ -> Some (mkGeneric<FSharpUnionSerializer<_>> [| typ |])
                 | _ -> None
