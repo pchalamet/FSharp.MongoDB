@@ -22,7 +22,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MongoDB.Bson" Version="3.1.0" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <!-- https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-using-a-nuspec -->
+    <PackageId>FSharp.MongoDB</PackageId>
+    <Title>FSharp.MongoDB</Title>
+    <Description>Add F# support to MongoDB.Driver</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/pchalamet/FSharp.MongoDB</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pchalamet/FSharp.MongoDB</RepositoryUrl>
+    <PackageTags>f#;fsharp;mongodB;driver</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
 
 </Project>

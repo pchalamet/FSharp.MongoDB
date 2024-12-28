@@ -19,8 +19,6 @@ open MongoDB.Bson
 open MongoDB.Bson.IO
 open MongoDB.Bson.Serialization
 
-open FSharp.MongoDB.Bson.Serialization
-
 [<AutoOpen>]
 module Helpers =
 

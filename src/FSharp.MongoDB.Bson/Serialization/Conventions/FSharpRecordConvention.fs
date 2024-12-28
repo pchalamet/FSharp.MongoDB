@@ -13,13 +13,11 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization.Conventions
+namespace MongoDB.Bson.Serialization.Conventions
 
 open Microsoft.FSharp.Reflection
-
 open MongoDB.Bson.Serialization.Conventions
-
-open FSharp.MongoDB.Bson.Serialization.Helpers
+open MongoDB.Bson.Serialization.Helpers
 
 /// <summary>
 /// Convention for F# record types that initializes a <c>BsonClassMap</c> by mapping the record

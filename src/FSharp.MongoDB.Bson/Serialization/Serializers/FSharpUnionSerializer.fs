@@ -13,16 +13,14 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization.Serializers
+namespace MongoDB.Bson.Serialization.Serializers
 
 open Microsoft.FSharp.Reflection
-
 open MongoDB.Bson.IO
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Conventions
 open MongoDB.Bson.Serialization.Serializers
-
-open FSharp.MongoDB.Bson.Serialization.Helpers
+open MongoDB.Bson.Serialization.Helpers
 
 /// <summary>
 /// Serializer for F# discriminated unions.

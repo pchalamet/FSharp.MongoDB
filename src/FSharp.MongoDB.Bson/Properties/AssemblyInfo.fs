@@ -21,7 +21,5 @@ open System.Runtime.CompilerServices
 [<assembly: AssemblyTitle("FSharp.MongoDB.Bson")>]
 [<assembly: AssemblyProduct("FSharp.MongoDB.Bson")>]
 [<assembly: AssemblyDescription("BSON serialization library for F# data types.")>]
-[<assembly: AssemblyVersion("0.0.1.0")>]
-[<assembly: AssemblyFileVersion("0.0.1.0")>]
 
 do ()
