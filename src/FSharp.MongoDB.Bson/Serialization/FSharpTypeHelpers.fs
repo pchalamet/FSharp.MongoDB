@@ -13,7 +13,7 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization
+namespace MongoDB.Bson.Serialization
 
 open System.Reflection
 open Microsoft.FSharp.Reflection

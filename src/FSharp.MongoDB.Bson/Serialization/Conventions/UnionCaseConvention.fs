@@ -13,17 +13,15 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization.Conventions
+namespace MongoDB.Bson.Serialization.Conventions
 
 open System
 open System.Linq.Expressions
 open System.Reflection
 open Microsoft.FSharp.Reflection
-
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Conventions
-
-open FSharp.MongoDB.Bson.Serialization.Helpers
+open MongoDB.Bson.Serialization.Helpers
 
 /// <summary>
 /// Convention for non-null union cases of F# discriminated unions that initializes a

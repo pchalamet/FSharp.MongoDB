@@ -13,14 +13,12 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization
+namespace MongoDB.Bson.Serialization
 
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Conventions
-
-open FSharp.MongoDB.Bson.Serialization.Conventions
-open FSharp.MongoDB.Bson.Serialization.Helpers
-open FSharp.MongoDB.Bson.Serialization.Serializers
+open MongoDB.Bson.Serialization.Helpers
+open MongoDB.Bson.Serialization.Serializers
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 [<RequireQualifiedAccess>]

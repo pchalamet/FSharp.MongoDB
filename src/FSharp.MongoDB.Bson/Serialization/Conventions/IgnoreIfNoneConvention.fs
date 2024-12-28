@@ -13,12 +13,11 @@
  * limitations under the License.
  *)
 
-namespace FSharp.MongoDB.Bson.Serialization.Conventions
+namespace MongoDB.Bson.Serialization.Conventions
 
 open Microsoft.FSharp.Reflection
 open MongoDB.Bson.Serialization.Conventions
-
-open FSharp.MongoDB.Bson.Serialization.Helpers
+open MongoDB.Bson.Serialization.Helpers
 
 /// <summary>
 /// Convention for F# option/voption types that writes the value in the <c>Some</c> case and omits the field

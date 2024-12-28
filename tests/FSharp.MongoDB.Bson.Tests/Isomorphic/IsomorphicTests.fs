@@ -1,10 +1,8 @@
 namespace FSharp.MongoDB.Bson.Tests.Serialization
 
 open CSharpDataModels
-
 open FsUnit
 open NUnit.Framework
-
 open MongoDB.Bson
 
 module IsomorphicSerialization =
