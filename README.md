@@ -1,3 +1,15 @@
+# FSharp.MongoDB history
+
+Starting from this commit, this repository has been pruned and updated to netstandard 2.1.
+
+Repository origins are:
+* Initial repository: https://github.com/mongodb-labs/mongo-fsharp-driver-prototype
+* Forked by @visemet (Max Hirschhorn): https://github.com/visemet/FSharp.MongoDB
+
+
+
+
+
 FSharp.MongoDB
 ==============
 
