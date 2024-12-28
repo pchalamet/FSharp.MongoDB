@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <VSTestLogger>trx</VSTestLogger>
   </PropertyGroup>
 
   <ItemGroup>

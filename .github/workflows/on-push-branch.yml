@@ -1,0 +1,37 @@
+name: 🍿 On Push Branch
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.0.100
+  
+      - name: Build & Test
+        run: make test config=Release
+
+      - name: Create Test Report
+        uses: magnusopera/test-reporter@main
+        if: always()
+        with:
+          name: Unit Tests Report
+          path: '**/*.trx'
+          reporter: dotnet-trx
+          fail-on-error: false
+          fail-on-empty: false
+          use-actions-summary: true
+
+      - name: Build NuGet
+        run: make nuget config=Release

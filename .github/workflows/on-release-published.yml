@@ -1,0 +1,29 @@
+name: 🍿 On Release Published
+run-name: Release ${{github.ref_name}}
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  release-nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.0.100
+
+      - name: Cloning repository
+        uses: actions/checkout@v4
+
+      - name: Download Release artifacts
+        uses: robinraju/release-downloader@v1.11
+        with:
+          tag: ${{github.ref_name}}
+          fileName: '*.nupkg'
+
+      - name: NuGet Release
+        run: make publish
+
