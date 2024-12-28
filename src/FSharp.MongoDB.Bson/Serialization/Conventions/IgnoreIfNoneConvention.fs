@@ -21,7 +21,7 @@ open MongoDB.Bson.Serialization.Conventions
 open FSharp.MongoDB.Bson.Serialization.Helpers
 
 /// <summary>
-/// Convention for F# option types that writes the value in the <c>Some</c> case and omits the field
+/// Convention for F# option/voption types that writes the value in the <c>Some</c> case and omits the field
 /// in the <c>None</c> case.
 /// </summary>
 type IgnoreIfNoneConvention() =
