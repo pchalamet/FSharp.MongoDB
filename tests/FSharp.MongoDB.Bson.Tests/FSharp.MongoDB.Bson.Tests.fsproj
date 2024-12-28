@@ -8,13 +8,14 @@
 
   <ItemGroup>
     <Compile Include="SerializationTestHelpers.fs" />
-    <Compile Include="FSharpListSerializationTests.fs" />
-    <Compile Include="FSharpMapSerializationTests.fs" />
-    <Compile Include="FSharpOptionSerializationTests.fs" />
-    <Compile Include="FSharpValueOptionSerializationTests.fs" />
-    <Compile Include="FSharpRecordSerializationTests.fs" />
-    <Compile Include="FSharpSetSerializationTests.fs" />
-    <Compile Include="FSharpUnionSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpListSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpMapSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpOptionSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpValueOptionSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpRecordSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpSetSerializationTests.fs" />
+    <Compile Include="Serialization\FSharpUnionSerializationTests.fs" />
+    <Compile Include="Isomorphic\IsomorphicTests.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FSharp.MongoDB.Bson\FSharp.MongoDB.Bson.fsproj" />
+    <ProjectReference Include="..\CSharpDataModels\CSharpDataModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

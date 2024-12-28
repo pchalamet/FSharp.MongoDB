@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B746968
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.MongoDB.Bson.Tests", "tests\FSharp.MongoDB.Bson.Tests\FSharp.MongoDB.Bson.Tests.fsproj", "{97A3FF10-5EB1-4339-A19F-F31A419F469B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpDataModels", "tests\CSharpDataModels\CSharpDataModels.csproj", "{269F20FF-AF4A-4794-B110-4DCEC61C6220}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{97A3FF10-5EB1-4339-A19F-F31A419F469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A3FF10-5EB1-4339-A19F-F31A419F469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A3FF10-5EB1-4339-A19F-F31A419F469B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{269F20FF-AF4A-4794-B110-4DCEC61C6220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{269F20FF-AF4A-4794-B110-4DCEC61C6220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{269F20FF-AF4A-4794-B110-4DCEC61C6220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{269F20FF-AF4A-4794-B110-4DCEC61C6220}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BCBB6338-FE09-4335-BDBF-4AA9CAC58E85} = {DA63CDA6-FBA5-4979-9C90-50A8F7B7EFDA}
 		{97A3FF10-5EB1-4339-A19F-F31A419F469B} = {0B746968-8694-4009-B944-9A604337CCF4}
+		{269F20FF-AF4A-4794-B110-4DCEC61C6220} = {0B746968-8694-4009-B944-9A604337CCF4}
 	EndGlobalSection
 EndGlobal

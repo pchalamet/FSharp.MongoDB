@@ -20,44 +20,47 @@ open MongoDB.Bson
 open FsUnit
 open NUnit.Framework
 
-module FSharpValueOptionSerialization =
+module FSharpOptionSerialization =
 
     type Primitive =
-        { Bool : bool voption
-          Int : int voption
-          String : string voption
-          Float : float voption }
+        { Bool : bool option
+          Int : int option
+          String : string option
+          Float : float option }
 
     [<Test>]
-    let ``test serialize value optional primitives (valuenone) in a record type``() =
-        let value =  { Bool = ValueNone
-                       Int = ValueNone
-                       String = ValueNone
-                       Float = ValueNone }
+    let ``test serialize optional primitives (none) in a record type``() =
+        let value =  { Bool = None
+                       Int = None
+                       String = None
+                       Float = None }
 
         let result = serialize value
-        let expected = BsonDocument()
+        let expected = BsonDocument([ BsonElement("Bool", BsonNull.Value)
+                                      BsonElement("Int", BsonNull.Value)
+                                      BsonElement("String", BsonNull.Value)
+                                      BsonElement("Float", BsonNull.Value) ])
 
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize value optional primitives (valuenone) in a record type)``() =
+    let ``test deserialize optional primitives (none) in a record type)``() =
         let doc = BsonDocument()
 
         let result = deserialize doc typeof<Primitive>
-        let expected = { Bool = ValueNone
-                         Int = ValueNone
-                         String = ValueNone
-                         Float = ValueNone }
+        let expected = { Bool = None
+                         Int = None
+                         String = None
+                         Float = None }
 
         result |> should equal expected
 
     [<Test>]
-    let ``test serialize value optional primitives (valuesome) in a record type``() =
-        let value =  { Bool = ValueSome false
-                       Int = ValueSome 0
-                       String = ValueSome "0.0"
-                       Float = ValueSome 0.0 }
+    let ``test serialize optional primitives (some) in a record type``() =
+        let value =  { Bool = Some false
+                       Int = Some 0
+                       String = Some "0.0"
+                       Float = Some 0.0 }
 
         let result = serialize value
         let expected = BsonDocument([ BsonElement("Bool", BsonBoolean false)
@@ -68,16 +71,16 @@ module FSharpValueOptionSerialization =
         result |> should equal expected
 
     [<Test>]
-    let ``test deserialize value optional primitives (value some) in a record type``() =
+    let ``test deserialize optional primitives (some) in a record type``() =
         let doc = BsonDocument([ BsonElement("Bool", BsonBoolean true)
                                  BsonElement("Int", BsonInt32 1)
                                  BsonElement("String", BsonString "1.0")
                                  BsonElement("Float", BsonDouble 1.0) ])
 
         let result = deserialize doc typeof<Primitive>
-        let expected = { Bool = ValueSome true
-                         Int = ValueSome 1
-                         String = ValueSome "1.0"
-                         Float = ValueSome 1.0 }
+        let expected = { Bool = Some true
+                         Int = Some 1
+                         String = Some "1.0"
+                         Float = Some 1.0 }
 
         result |> should equal expected
