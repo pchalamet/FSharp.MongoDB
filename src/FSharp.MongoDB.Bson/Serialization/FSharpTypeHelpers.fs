@@ -34,17 +34,21 @@ module private Helpers =
     /// <summary>
     /// Returns <c>Some typ</c> when <c>typ</c> is a record type, and <c>None</c> otherwise.
     /// </summary>
-    let (|IsRecord|_|) typ =
-        let isRecord typ = typ <> null && FSharpType.IsRecord(typ, bindingFlags)
-        whenType isRecord typ
+    let (|IsRecord|_|) = function
+        | Null -> None
+        | NonNull typ ->
+            let isRecord typ = FSharpType.IsRecord(typ, bindingFlags)
+            whenType isRecord typ
 
     /// <summary>
     /// Returns <c>Some typ</c> when <c>typ</c> is a top-level union type or when it represents a
     /// particular union case, and <c>None</c> otherwise.
     /// </summary>
-    let (|IsUnion|_|) (typ:System.Type) =
-        let isUnion typ = typ <> null && FSharpType.IsUnion(typ, bindingFlags)
-        whenType isUnion typ
+    let (|IsUnion|_|) = function
+        | Null -> None
+        | NonNull typ ->
+            let isUnion typ = FSharpType.IsUnion(typ, bindingFlags)
+            whenType isUnion typ
 
     /// <summary>
     /// Returns true if <c>typ</c> is a generic type with defintion <c>'GenericType</c>.
