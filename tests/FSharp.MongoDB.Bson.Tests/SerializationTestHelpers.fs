@@ -23,7 +23,7 @@ open MongoDB.Bson.Serialization
 module Helpers =
 
     let serialize<'T> (value: 'T) =
-        FSharpValueSerializer.register()
+        FSharpSerializer.register()
 
         let doc = BsonDocument()
         use writer = new BsonDocumentWriter(doc, BsonDocumentWriterSettings.Defaults)
@@ -33,7 +33,7 @@ module Helpers =
         doc
 
     let deserialize<'T> doc =
-        FSharpValueSerializer.register()
+        FSharpSerializer.register()
 
         use reader = new BsonDocumentReader(doc, BsonDocumentReaderSettings.Defaults)
         BsonSerializer.Deserialize<'T>(reader)
