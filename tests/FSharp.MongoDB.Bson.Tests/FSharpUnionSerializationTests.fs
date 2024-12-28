@@ -15,9 +15,9 @@
 
 namespace FSharp.MongoDB.Bson.Tests.Serialization
 
-open FsUnit
 open MongoDB.Bson
 
+open FsUnit
 open NUnit.Framework
 
 module FSharpUnionSerialization =
