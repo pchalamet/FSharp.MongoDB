@@ -29,17 +29,16 @@ type IgnoreIfNoneConvention() =
 
     interface IMemberMapConvention with
         member _.Apply memberMap =
+            let setDefaultValue name typ =
+                let unionCase = FSharpType.GetUnionCases(typ) |> Array.find (fun case -> case.Name = name)
+                let none = FSharpValue.MakeUnion(unionCase, [||])
+                memberMap.SetDefaultValue none |> ignore
+                
             match memberMap.MemberType with
             | IsOption _ ->
-                let optionType = mkGenericUsingDef<_ option> memberMap.MemberType
-                let unionCase = FSharpType.GetUnionCases(optionType) |> Array.find (fun case -> case.Name = "None")
-                let noneValue = FSharpValue.MakeUnion(unionCase, [||])
-                memberMap.SetDefaultValue noneValue |> ignore
+                mkGenericUsingDef<_ option> memberMap.MemberType |> setDefaultValue "None"
                 memberMap.SetIgnoreIfDefault true |> ignore
             | IsValueOption _ ->
-                let voptionType = mkGenericUsingDef<_ voption> memberMap.MemberType
-                let unionCase = FSharpType.GetUnionCases(voptionType) |> Array.find (fun case -> case.Name = "ValueNone")
-                let vnoneValue = FSharpValue.MakeUnion(unionCase, [||])
-                memberMap.SetDefaultValue vnoneValue |> ignore
+                mkGenericUsingDef<_ voption> memberMap.MemberType |> setDefaultValue "ValueNone"
                 memberMap.SetIgnoreIfDefault true |> ignore
             | _ -> ()
