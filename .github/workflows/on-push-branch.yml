@@ -1,5 +1,4 @@
 name: 🍿 On Push Branch
-run-name: Building ${{ github.ref }}
 
 on:
   push:
