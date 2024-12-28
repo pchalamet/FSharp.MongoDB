@@ -15,9 +15,6 @@
 
 namespace FSharp.MongoDB.Bson.Serialization
 
-open System
-open Microsoft.FSharp.Reflection
-
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Conventions
 
@@ -36,8 +33,7 @@ module FSharpValueSerializer =
     type private FSharpValueSerializationProvider() =
 
         interface IBsonSerializationProvider with
-
-            member __.GetSerializer typ =
+            member _.GetSerializer typ =
                 let mkSerializer typ = 
                     typ
                     |> Option.map (fun typ -> System.Activator.CreateInstance typ :?> IBsonSerializer)
@@ -55,7 +51,7 @@ module FSharpValueSerializer =
 
     let private addConvention name pred convention =
         let pack = { new IConventionPack with
-            member __.Conventions = Seq.singleton convention }
+            member _.Conventions = Seq.singleton convention }
         ConventionRegistry.Register(name, pack, (fun typ -> pred typ |> Option.isSome))
 
     let mutable private registered = false

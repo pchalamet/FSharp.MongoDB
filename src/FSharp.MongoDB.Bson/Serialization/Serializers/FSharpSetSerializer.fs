@@ -17,7 +17,6 @@ namespace FSharp.MongoDB.Bson.Serialization.Serializers
 
 open System.Collections.Generic
 
-open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Serializers
 
 /// <summary>
@@ -26,18 +25,18 @@ open MongoDB.Bson.Serialization.Serializers
 type FSharpSetSerializer<'ElemType when 'ElemType : comparison>() =
     inherit EnumerableSerializerBase<Set<'ElemType>, 'ElemType>()
 
-    override __.EnumerateItemsInSerializationOrder lst = Set.toSeq lst
+    override _.EnumerateItemsInSerializationOrder lst = Set.toSeq lst
 
     // XXX: Using a mutable List because the AddItem member does not return a value,
     //      so it is not possible to accumulate into a set
-    override __.CreateAccumulator() = List<'ElemType>() |> box
+    override _.CreateAccumulator() = List<'ElemType>() |> box
 
-    override __.AddItem (accumulator, item) =
+    override _.AddItem (accumulator, item) =
         match accumulator with
         | :? List<'ElemType> as lst -> lst.Add item
-        | _ -> failwithf "Expected accumulator to be a list, but got %A" accumulator
+        | _ -> failwith $"Expected accumulator to be a list, but got {accumulator}"
 
-    override __.FinalizeResult accumulator =
+    override _.FinalizeResult accumulator =
         match accumulator with
         | :? List<'ElemType> as lst -> Set.ofSeq lst
-        | _ -> failwithf "Expected accumulator to be a list, but got %A" accumulator
+        | _ -> failwith $"Expected accumulator to be a list, but got {accumulator}"

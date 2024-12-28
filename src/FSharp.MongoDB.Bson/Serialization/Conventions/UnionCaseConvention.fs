@@ -20,7 +20,6 @@ open System.Linq.Expressions
 open System.Reflection
 open Microsoft.FSharp.Reflection
 
-open MongoDB.Bson
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Conventions
 
@@ -82,7 +81,6 @@ type UnionCaseConvention() =
         fields |> Array.iter (classMap.MapMember >> ignore)
 
     interface IClassMapConvention with
-
-        member __.Apply classMap =
+        member _.Apply classMap =
             tryGetUnionCase classMap.ClassType
             |> Option.iter (mapUnionCase classMap)

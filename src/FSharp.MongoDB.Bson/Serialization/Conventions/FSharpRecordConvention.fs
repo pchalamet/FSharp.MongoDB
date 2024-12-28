@@ -29,13 +29,11 @@ type FSharpRecordConvention() =
     inherit ConventionBase()
 
     interface IClassMapConvention with
-
-        member __.Apply classMap =
+        member _.Apply classMap =
             match classMap.ClassType with
             | IsRecord typ ->
                 let fields = FSharpType.GetRecordFields(typ, bindingFlags)
                 let names = fields |> Array.map (fun x -> x.Name)
-                let types = fields |> Array.map (fun x -> x.PropertyType)
 
                 // Map the constructor of the record type.
                 let ctor = FSharpValue.PreComputeRecordConstructorInfo(typ, bindingFlags)

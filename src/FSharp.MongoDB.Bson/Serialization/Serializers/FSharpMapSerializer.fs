@@ -17,7 +17,6 @@ namespace FSharp.MongoDB.Bson.Serialization.Serializers
 
 open System.Collections.Generic
 
-open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Serializers
 
 /// <summary>
@@ -28,13 +27,13 @@ type FSharpMapSerializer<'KeyType, 'ValueType when 'KeyType : comparison>() =
 
     let serializer = DictionaryInterfaceImplementerSerializer<Dictionary<'KeyType, 'ValueType>>()
 
-    override __.Serialize (context, args, mapValue) =
+    override _.Serialize (context, args, mapValue) =
         let dictValue = Dictionary()
         mapValue |> Map.iter (fun key value -> dictValue.Add(key, value))
 
         serializer.Serialize(context, args, dictValue)
 
-    override __.Deserialize (context, args) =
+    override _.Deserialize (context, args) =
         serializer.Deserialize(context, args)
         |> Seq.map (|KeyValue|)
         |> Map.ofSeq
