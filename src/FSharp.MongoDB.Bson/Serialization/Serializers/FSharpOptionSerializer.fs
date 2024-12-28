@@ -23,19 +23,19 @@ open MongoDB.Bson.Serialization.Serializers
 /// Serializer for F# option types that writes the value in the <c>Some</c> case and <c>null</c> in
 /// the <c>None</c> case.
 /// </summary>
-type FSharpOptionSerializer<'T>() =
+type FSharpOptionSerializer<'T when 'T: not null>() =
     inherit SerializerBase<'T option>()
 
     let serializer = lazy (BsonSerializer.LookupSerializer<'T>())
 
-    override __.Serialize (context, args, value) =
+    override _.Serialize (context, args, value) =
         let writer = context.Writer
 
         match value with
         | Some x -> serializer.Value.Serialize(context, args, x :> obj)
         | None -> writer.WriteNull()
 
-    override __.Deserialize (context, args) =
+    override _.Deserialize (context, args) =
         let reader = context.Reader
 
         match reader.GetCurrentBsonType() with

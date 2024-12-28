@@ -15,7 +15,6 @@
 
 namespace FSharp.MongoDB.Bson.Serialization.Serializers
 
-open System.Diagnostics
 open MongoDB.Bson
 open MongoDB.Bson.Serialization
 open MongoDB.Bson.Serialization.Serializers
@@ -24,7 +23,7 @@ open MongoDB.Bson.Serialization.Serializers
 /// Serializer for F# voption types that writes the value in the <c>ValueSome</c> case and <c>null</c> in
 /// the <c>None</c> case.
 /// </summary>
-type FSharpValueOptionSerializer<'T>() =
+type FSharpValueOptionSerializer<'T when 'T: not null>() =
     inherit SerializerBase<'T voption>()
 
     let serializer = lazy (BsonSerializer.LookupSerializer<'T>())

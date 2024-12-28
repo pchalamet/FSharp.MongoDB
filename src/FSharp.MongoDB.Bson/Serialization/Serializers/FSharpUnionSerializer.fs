@@ -66,7 +66,7 @@ type FSharpUnionSerializer<'T>() =
             reader.SkipValue()
             getDiscriminator reader
 
-    override __.Serialize (context, args, value) =
+    override _.Serialize (context, args, value) =
         let writer = context.Writer
         let (unionCase, fields) = FSharpValue.GetUnionFields(value, typ, bindingFlags)
 
@@ -82,7 +82,7 @@ type FSharpUnionSerializer<'T>() =
             let serializer = serializers.[unionCase.Name]
             serializer.Serialize(context, args, value)
 
-    override __.Deserialize (context, args) =
+    override _.Deserialize (context, args) =
         let reader = context.Reader
         let mark = reader.GetBookmark()
         reader.ReadStartDocument()
