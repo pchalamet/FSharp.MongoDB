@@ -6,6 +6,10 @@ on:
     tags:
       - '**'
 
+permissions:
+  contents: write
+  packages: write
+
 env:
   BUILD_VERSION: ${{ github.ref_name }}
 
