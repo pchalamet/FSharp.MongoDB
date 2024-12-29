@@ -1,6 +1,6 @@
 # FSharp.MongoDB
 
-> an F# interface for the MongoDB .NET [C# driver][csharp_driver].
+> Add support for F# types to [.net MongoDB.Driver][csharp_driver].
 
 ## Goals of this project
 
