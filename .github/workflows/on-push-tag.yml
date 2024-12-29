@@ -39,7 +39,7 @@ jobs:
         run: make test config=Release version=${{ env.BUILD_VERSION }}
 
       - name: Create Test Report
-        uses: dorny/test-reporter@v1.9.1
+        uses: magnusopera/test-reporter@main
         if: always()
         with:
           name: Unit Tests Report
