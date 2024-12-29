@@ -4,7 +4,7 @@
 
 ## Goals of this project
 
-  * Provide an idiomatic F# API for interacting with MongoDB.
+  * Provide support for F# types for interacting with MongoDB.
   * Have an implementation that is fully testable without connecting to a server.
   * Isomorphic bson serialization for C# and F#.
 
@@ -83,6 +83,13 @@ If you want to auto-generate `ObjectId` (as the Id of the collection), add `[<CL
 ## Discriminated union
 The case of the discriminated union is stored in `_t` key.
 Each value of the DU is serialized as an `object` using its corresponding value name.
+
+## Nullable Reference Type
+NRT are serialized as:
+* `null` if `Null`
+* `object` if `NonNull` object
+
+:warning: As of now, NRT can't be considered `null` when deserializing if value is missing.
 
 # License
 The contents of this library are made available under the [Apache License, Version 2.0][license].
