@@ -21,7 +21,7 @@ open MongoDB.Bson.Serialization.Serializers
 /// <summary>
 /// Serializer for F# maps.
 /// </summary>
-type FSharpMapSerializer<'KeyType, 'ValueType when 'KeyType : comparison>() =
+type FSharpMapSerializer<'KeyType, 'ValueType when 'KeyType : comparison and 'KeyType: not null>() =
     inherit SerializerBase<Map<'KeyType, 'ValueType>>()
 
     let serializer = DictionaryInterfaceImplementerSerializer<Dictionary<'KeyType, 'ValueType>>()
