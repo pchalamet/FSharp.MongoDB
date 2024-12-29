@@ -15,15 +15,11 @@ jobs:
         with:
           dotnet-version: 9.0.100
 
-      - name: Cloning repository
-        uses: actions/checkout@v4
-
       - name: Download Release artifacts
         uses: robinraju/release-downloader@v1.11
         with:
           tag: ${{github.ref_name}}
           fileName: '*.nupkg'
 
-      - name: NuGet Release
-        run: make publish
-
+      - name: Publish NuGet
+        run: dotnet nuget push *.nupkg -k ${{secrets.NUGET_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
