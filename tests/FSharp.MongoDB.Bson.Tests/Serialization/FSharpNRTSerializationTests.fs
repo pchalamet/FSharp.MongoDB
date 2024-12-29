@@ -36,8 +36,7 @@ module FSharpNRTSerialization =
     let ``test deserialize nullable reference (null) in a record type)``() =
         // FIXME: this shall support deserializing missing null value for NRT
         //        as of now this means NRT can't be a missing value while deserializing
-        // let doc = BsonDocument()
-        let doc = BsonDocument([ BsonElement("String", BsonNull.Value) ])
+        let doc = BsonDocument()
 
         let result = deserialize<Primitive> doc
         let expected = { String = null }

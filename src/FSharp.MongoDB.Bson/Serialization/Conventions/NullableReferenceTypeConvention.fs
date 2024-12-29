@@ -19,7 +19,7 @@ type NullableReferenceTypeConvention() =
             | :? PropertyInfo as propInfo -> 
                 let nrtInfo = nrtContext.Create(propInfo)
                 printfn $"Info = {nrtInfo.WriteState}"
-                if nrtInfo.WriteState = NullabilityState.Unknown then
+                if nrtInfo.WriteState = NullabilityState.Nullable then
                     printfn $"Enabling null"
                     memberMap.SetDefaultValue(null) |> ignore
                 else

@@ -18,6 +18,7 @@ namespace MongoDB.Bson.Serialization.Conventions
 open Microsoft.FSharp.Reflection
 open MongoDB.Bson.Serialization.Conventions
 open MongoDB.Bson.Serialization.Helpers
+open System.Reflection
 
 /// <summary>
 /// Convention for F# record types that initializes a <c>BsonClassMap</c> by mapping the record
@@ -25,6 +26,10 @@ open MongoDB.Bson.Serialization.Helpers
 /// </summary>
 type FSharpRecordConvention() =
     inherit ConventionBase()
+
+#if NET8_0_OR_GREATER
+    // let nrtContext = NullabilityInfoContext()
+#endif
 
     interface IClassMapConvention with
         member _.Apply classMap =
@@ -38,5 +43,14 @@ type FSharpRecordConvention() =
                 classMap.MapConstructor(ctor, names) |> ignore
 
                 // Map each field of the record type.
-                fields |> Array.iter (classMap.MapMember >> ignore)
+                fields |> Array.iter (fun pi ->
+                    let memberMap = classMap.MapMember(pi)
+                    // memberMap.SetDefaultValue(fun () -> null) |> ignore
+#if NET8_0_OR_GREATER
+                    // let nrtInfo = nrtContext.Create(pi)
+                    // if nrtInfo.WriteState = NullabilityState.Nullable then
+                    //     memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
+#endif
+                    ()
+                )
             | _ -> ()
