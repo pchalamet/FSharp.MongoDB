@@ -20,7 +20,6 @@ open MongoDB.Bson.Serialization.Conventions
 open MongoDB.Bson.Serialization.Helpers
 open MongoDB.Bson.Serialization.Serializers
 
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 [<RequireQualifiedAccess>]
 module FSharp =
 
