@@ -21,7 +21,9 @@ Repository origins are:
 
 ## Supported platforms
 
-This project targets `netstandard2.1` ([compatible runtimes](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-1#select-net-standard-version)). 
+This project targets `.net 8`, `.net 9` and  `netstandard2.1` ([compatible runtimes](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-1#select-net-standard-version))
+
+:warning: NRT support starts with `.net sdk 9.0.200`. F# compiler in .net sdk 9.0.10x does not set correctly nullable attributes on F# types. NRT are not supported on `netstandard2.1`.
 
 ## Contributing
   * If you have a question about the library, then create an [issue][issues] with the `question` label.
@@ -89,7 +91,9 @@ NRT are serialized as:
 * `null` if `Null`
 * `object` if `NonNull` object
 
-:warning: As of now, NRT can't be considered `null` when deserializing if value is missing.
+On deserialization, missing value is mapped to `null`.
+
+:warning: NRT support starts with .net sdk 9.0.200. F# compiler in .net sdk 9.0.10x does not set correctly nullable attributes on F# types.
 
 # License
 The contents of this library are made available under the [Apache License, Version 2.0][license].

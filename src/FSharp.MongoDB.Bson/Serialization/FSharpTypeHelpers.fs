@@ -23,7 +23,9 @@ module private Helpers =
 
     let bindingFlags = BindingFlags.Public ||| BindingFlags.NonPublic
 
+#if !NETSTANDARD2_1
     let nrtContext = NullabilityInfoContext()
+#endif
 
     /// <summary>
     /// Returns <c>Some typ</c> when <c>pred typ</c> returns true, and <c>None</c> when
@@ -95,6 +97,10 @@ module private Helpers =
 
     let mkMemberNullable (memberMap: BsonClassMap) (propertyInfo: PropertyInfo) =
         let memberMap = memberMap.MapMember(propertyInfo)
+#if !NETSTANDARD2_1
         let nrtInfo = nrtContext.Create(propertyInfo)
         if nrtInfo.WriteState = NullabilityState.Nullable then
             memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
+#else
+        ()
+#endif
