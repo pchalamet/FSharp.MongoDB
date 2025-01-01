@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net9.0;net8.0;netstandard2.1</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="MongoDB.Bson" Version="3.1.0" />
+    <!-- <ProjectReference Include="../../../mongo-csharp-driver/src/MongoDB.Bson/MongoDB.Bson.csproj" /> -->
   </ItemGroup>
 
   <PropertyGroup>

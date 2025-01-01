@@ -31,12 +31,12 @@ type FSharpRecordConvention() =
             match classMap.ClassType with
             | IsRecord typ ->
                 let fields = FSharpType.GetRecordFields(typ, bindingFlags)
-                let names = fields |> Array.map (fun x -> x.Name)
+                let names = fields |> Array.map _.Name
 
                 // Map the constructor of the record type.
                 let ctor = FSharpValue.PreComputeRecordConstructorInfo(typ, bindingFlags)
                 classMap.MapConstructor(ctor, names) |> ignore
 
                 // Map each field of the record type.
-                fields |> Array.iter (classMap.MapMember >> ignore)
+                fields |> Array.iter (mapMemberNullable classMap)
             | _ -> ()

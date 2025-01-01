@@ -65,7 +65,7 @@ type UnionCaseConvention() =
 
     let mapUnionCase (classMap:BsonClassMap) (unionCase:UnionCaseInfo) =
         let fields = unionCase.GetFields()
-        let names = fields |> Array.map (fun x -> x.Name)
+        let names = fields |> Array.map _.Name
 
         classMap.SetDiscriminator unionCase.Name
         classMap.SetDiscriminatorIsRequired true
@@ -76,7 +76,7 @@ type UnionCaseConvention() =
         classMap.MapCreator(del, names) |> ignore
 
         // Map each field of the union case.
-        fields |> Array.iter (classMap.MapMember >> ignore)
+        fields |> Array.iter (mapMemberNullable classMap)
 
     interface IClassMapConvention with
         member _.Apply classMap =
