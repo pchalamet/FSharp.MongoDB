@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -12,7 +12,6 @@
     <Compile Include="Serialization\Conventions\FSharpRecordConvention.fs" />
     <Compile Include="Serialization\Conventions\IgnoreIfNoneConvention.fs" />
     <Compile Include="Serialization\Conventions\UnionCaseConvention.fs" />
-    <Compile Include="Serialization\Conventions\NullableReferenceTypeConvention.fs" />
     <Compile Include="Serialization\Serializers\FSharpListSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpMapSerializer.fs" />
     <Compile Include="Serialization\Serializers\FSharpOptionSerializer.fs" />

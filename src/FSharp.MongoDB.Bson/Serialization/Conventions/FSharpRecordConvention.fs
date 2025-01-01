@@ -27,9 +27,7 @@ open System.Reflection
 type FSharpRecordConvention() =
     inherit ConventionBase()
 
-#if NET8_0_OR_GREATER
-    // let nrtContext = NullabilityInfoContext()
-#endif
+    static let nrtContext = NullabilityInfoContext()
 
     interface IClassMapConvention with
         member _.Apply classMap =
@@ -45,12 +43,9 @@ type FSharpRecordConvention() =
                 // Map each field of the record type.
                 fields |> Array.iter (fun pi ->
                     let memberMap = classMap.MapMember(pi)
-                    // memberMap.SetDefaultValue(fun () -> null) |> ignore
-#if NET8_0_OR_GREATER
+                    memberMap.SetDefaultValue(fun () -> null) |> ignore
                     // let nrtInfo = nrtContext.Create(pi)
                     // if nrtInfo.WriteState = NullabilityState.Nullable then
                     //     memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
-#endif
-                    ()
                 )
             | _ -> ()

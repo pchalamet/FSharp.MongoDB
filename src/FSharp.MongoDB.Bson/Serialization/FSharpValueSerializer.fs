@@ -71,8 +71,5 @@ module FSharp =
             UnionCaseConvention()
             |> addConvention "__fsharp_union_type__" (|IsUnion|_|)
 
-            NullableReferenceTypeConvention()
-            |> addConvention "__fsharp_nrt__" (Some)
-
             FSharpValueSerializationProvider()
             |> BsonSerializer.RegisterSerializationProvider

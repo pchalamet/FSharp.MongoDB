@@ -21,42 +21,54 @@ open NUnit.Framework
 module FSharpNRTSerialization =
 
     type Primitive =
-        { String : string  | null }
+        { String : string  | null 
+          Int: int }
+
+    [<RequireQualifiedAccess>]
+    type Primitive2 =
+        { String : string 
+          Int: int }
+
 
     [<Test>]
     let ``test serialize nullable reference (null) in a record type``() =
-        let value =  { String = null }
+        let value =  { String = null
+                       Int = 42 }
 
         let result = serialize value
-        let expected = BsonDocument([ BsonElement("String", BsonNull.Value) ])
+        let expected = BsonDocument([ BsonElement("String", BsonNull.Value)
+                                      BsonElement("Int", BsonInt32 42) ])
 
         result |> should equal expected
 
     [<Test>]
     let ``test deserialize nullable reference (null) in a record type)``() =
-        // FIXME: this shall support deserializing missing null value for NRT
-        //        as of now this means NRT can't be a missing value while deserializing
-        let doc = BsonDocument()
+        let doc = BsonDocument([ BsonElement("Int", BsonInt32 42) ])
 
-        let result = deserialize<Primitive> doc
-        let expected = { String = null }
+        let result = deserialize<Primitive2> doc
+        let expected = { String = null
+                         Int = 42 }
 
         result |> should equal expected
 
     [<Test>]
     let ``test serialize nullable reference (some) in a record type``() =
-        let value =  { String = "A String" }
+        let value =  { String = "A String"
+                       Int = 42 }
 
         let result = serialize value
-        let expected = BsonDocument([ BsonElement("String", BsonString "A String") ])
+        let expected = BsonDocument([ BsonElement("String", BsonString "A String")
+                                      BsonElement("Int", BsonInt32 42) ])
 
         result |> should equal expected
 
     [<Test>]
     let ``test deserialize nullable reference (some) in a record type``() =
-        let doc = BsonDocument([ BsonElement("String", BsonString "A String") ])
+        let doc = BsonDocument([ BsonElement("String", BsonString "A String")
+                                 BsonElement("Int", BsonInt32 42) ])
 
         let result = deserialize<Primitive> doc
-        let expected = { String = "A String" }
+        let expected = { String = "A String"
+                         Int = 42 }
 
         result |> should equal expected
