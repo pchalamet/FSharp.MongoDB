@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="MongoDB.Bson" Version="3.1.0" /> -->
-    <ProjectReference Include="../../../mongo-csharp-driver/src/MongoDB.Bson/MongoDB.Bson.csproj" />
+    <PackageReference Include="MongoDB.Bson" Version="3.1.0" />
+    <!-- <ProjectReference Include="../../../mongo-csharp-driver/src/MongoDB.Bson/MongoDB.Bson.csproj" /> -->
   </ItemGroup>
 
   <PropertyGroup>
