@@ -95,7 +95,10 @@ module private Helpers =
     /// </summary>
     let mkGenericUsingDef<'T> (typ:System.Type) = typ.GetGenericArguments() |> mkGeneric<'T>
 
-    let mkMemberNullable (memberMap: BsonClassMap) (propertyInfo: PropertyInfo) =
+    /// <summary>
+    /// Maps a member of a <c>BsonClassMap</c> to a nullable value if possible.
+    /// </summary>
+    let mapMemberNullable (memberMap: BsonClassMap) (propertyInfo: PropertyInfo) =
         let memberMap = memberMap.MapMember(propertyInfo)
 #if !NETSTANDARD2_1
         let nrtInfo = nrtContext.Create(propertyInfo)

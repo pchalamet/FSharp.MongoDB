@@ -18,7 +18,6 @@ namespace MongoDB.Bson.Serialization.Conventions
 open Microsoft.FSharp.Reflection
 open MongoDB.Bson.Serialization.Conventions
 open MongoDB.Bson.Serialization.Helpers
-open System.Reflection
 
 /// <summary>
 /// Convention for F# record types that initializes a <c>BsonClassMap</c> by mapping the record
@@ -32,12 +31,12 @@ type FSharpRecordConvention() =
             match classMap.ClassType with
             | IsRecord typ ->
                 let fields = FSharpType.GetRecordFields(typ, bindingFlags)
-                let names = fields |> Array.map (fun x -> x.Name)
+                let names = fields |> Array.map _.Name
 
                 // Map the constructor of the record type.
                 let ctor = FSharpValue.PreComputeRecordConstructorInfo(typ, bindingFlags)
                 classMap.MapConstructor(ctor, names) |> ignore
 
                 // Map each field of the record type.
-                fields |> Array.iter (mkMemberNullable classMap)
+                fields |> Array.iter (mapMemberNullable classMap)
             | _ -> ()
