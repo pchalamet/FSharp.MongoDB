@@ -13,7 +13,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4.2.0
         with:
-          dotnet-version: 9.0.100
+          dotnet-version: 9.0.101
 
       - name: Download Release artifacts
         uses: robinraju/release-downloader@v1.11
