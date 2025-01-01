@@ -100,7 +100,7 @@ module private Helpers =
 #if !NETSTANDARD2_1
         let nrtInfo = nrtContext.Create(propertyInfo)
         if nrtInfo.WriteState = NullabilityState.Nullable then
-            memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
+            memberMap.SetDefaultValue(null) |> ignore
 #else
         ()
 #endif
