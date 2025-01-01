@@ -47,7 +47,6 @@ module FSharpNRTSerialization =
                        Int = 42 }
 
         let result = serialize value
-        printfn $"{result}"
         let expected = BsonDocument([ BsonElement("String", BsonNull.Value)
                                       BsonElement("UnionCase", BsonDocument([ BsonElement("_t", BsonString "Tuple")
                                                                               BsonElement("Int", BsonInt32 42)
