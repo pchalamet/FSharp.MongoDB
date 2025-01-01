@@ -45,6 +45,5 @@ type FSharpRecordConvention() =
                     let memberMap = classMap.MapMember(pi)
                     let nrtInfo = nrtContext.Create(pi)
                     if nrtInfo.WriteState = NullabilityState.Nullable then
-                        memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
-                )
+                        memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore)
             | _ -> ()
