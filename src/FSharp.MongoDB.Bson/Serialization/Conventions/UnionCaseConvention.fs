@@ -30,8 +30,6 @@ open MongoDB.Bson.Serialization.Helpers
 type UnionCaseConvention() =
     inherit ConventionBase()
 
-    static let nrtContext = NullabilityInfoContext()
-
     let tryGetUnionCase (typ:System.Type) =
         // 8.5.4. Compiled Form of Union Types for Use from Other CLI Languages
         //   A compiled union type U has [o]ne CLI nested type U.C for each non-null union case C.
@@ -78,12 +76,7 @@ type UnionCaseConvention() =
         classMap.MapCreator(del, names) |> ignore
 
         // Map each field of the union case.
-        // Map each field of the record type.
-        fields |> Array.iter (fun pi ->
-            let memberMap = classMap.MapMember(pi)
-            let nrtInfo = nrtContext.Create(pi)
-            if nrtInfo.WriteState = NullabilityState.Nullable then
-                memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore)
+        fields |> Array.iter (mkMemberNullable classMap)
 
     interface IClassMapConvention with
         member _.Apply classMap =

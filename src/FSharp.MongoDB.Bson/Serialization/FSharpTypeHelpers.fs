@@ -23,6 +23,8 @@ module private Helpers =
 
     let bindingFlags = BindingFlags.Public ||| BindingFlags.NonPublic
 
+    let nrtContext = NullabilityInfoContext()
+
     /// <summary>
     /// Returns <c>Some typ</c> when <c>pred typ</c> returns true, and <c>None</c> when
     /// <c>pred typ</c> returns false.
@@ -90,3 +92,9 @@ module private Helpers =
     /// Creates a generic type <c>'T</c> using the generic arguments of <c>typ</c>.
     /// </summary>
     let mkGenericUsingDef<'T> (typ:System.Type) = typ.GetGenericArguments() |> mkGeneric<'T>
+
+    let mkMemberNullable (memberMap: BsonClassMap) (propertyInfo: PropertyInfo) =
+        let memberMap = memberMap.MapMember(propertyInfo)
+        let nrtInfo = nrtContext.Create(propertyInfo)
+        if nrtInfo.WriteState = NullabilityState.Nullable then
+            memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
