@@ -43,9 +43,8 @@ type FSharpRecordConvention() =
                 // Map each field of the record type.
                 fields |> Array.iter (fun pi ->
                     let memberMap = classMap.MapMember(pi)
-                    memberMap.SetDefaultValue(fun () -> null) |> ignore
-                    // let nrtInfo = nrtContext.Create(pi)
-                    // if nrtInfo.WriteState = NullabilityState.Nullable then
-                    //     memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
+                    let nrtInfo = nrtContext.Create(pi)
+                    if nrtInfo.WriteState = NullabilityState.Nullable then
+                        memberMap.SetDefaultValue(null).SetIsRequired(false) |> ignore
                 )
             | _ -> ()

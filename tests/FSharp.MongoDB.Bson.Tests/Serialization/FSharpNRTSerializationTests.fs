@@ -19,14 +19,12 @@ open FsUnit
 open NUnit.Framework
 
 module FSharpNRTSerialization =
-
     type Primitive =
         { String : string  | null 
           Int: int }
 
-    [<RequireQualifiedAccess>]
-    type Primitive2 =
-        { String : string 
+    type PrimitiveNoNull =
+        { StringNotNull : string 
           Int: int }
 
 
@@ -43,9 +41,11 @@ module FSharpNRTSerialization =
 
     [<Test>]
     let ``test deserialize nullable reference (null) in a record type)``() =
-        let doc = BsonDocument([ BsonElement("Int", BsonInt32 42) ])
+        // FIXME: once .net 9.0.200 is released, String can be omitted
+        let doc = BsonDocument([ BsonElement("String", BsonNull.Value)
+                                 BsonElement("Int", BsonInt32 42) ])
 
-        let result = deserialize<Primitive2> doc
+        let result = deserialize<Primitive> doc
         let expected = { String = null
                          Int = 42 }
 
@@ -72,3 +72,10 @@ module FSharpNRTSerialization =
                          Int = 42 }
 
         result |> should equal expected
+
+    [<Test>]
+    let ``test deserialize with missing non-null reference shall fail``() =
+        let doc = BsonDocument([ BsonElement("Int", BsonInt32 42) ])
+
+        (fun () -> deserialize<PrimitiveNoNull> doc |> ignore)
+        |> should throw typeof<BsonSerializationException>
